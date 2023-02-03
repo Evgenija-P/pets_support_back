@@ -42,4 +42,4 @@ const noticesShema = new mongoose.Schema(
 noticesShema.post('save', handleMongooseError);
 const Notices = mongoose.model('Notices', noticesShema);
 
-module.exports = { Notices };
+module.exports = Notices;

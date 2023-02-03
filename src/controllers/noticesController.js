@@ -1,5 +1,6 @@
 const { Notices } = require('../models/NoticesModel');
 const { ctrlWrapper } = require('../../middlewares');
+const { errorValidation } = require('../helpers');
 const getNoticesListController = async (req, res, next) => {
   //   const {
   //     user: { _id: owner },
@@ -53,23 +54,23 @@ const noticesByIdController = async (req, res, next) => {
   //   throw new WrongParametersError(`Contact with id:${id} not found`);
   //   // return res.status(404).json({ message: "Not found" });
   // }
-  const contact = await Notices.findById(id);
-
-  res.json({ message: contact });
+  const notices = await Notices.findById(id);
+  if (notices === null) {
+    throw errorValidation(404, `Notices with id:${id} not found`);
+  }
+  res.json({ message: notices });
 };
 const deleteNoticesController = async (req, res, next) => {
   const id = req.params.noticesId;
   //   const {
   //     user: { _id: owner },
   //   } = req;
-  const contactRemovedById = await Notices.findByIdAndRemove(id);
+  const noticesRemovedById = await Notices.findByIdAndRemove(id);
   //   const contactRemovedById = await Contact.findByIdAndRemove(id, owner);
-  //  if (contactRemovedById === null) {
-  //    // return res.status(404).json({ message: "Not found" });
-  //    throw new WrongParametersError(`Contact with id:${id} not found`);
-  //  }
-
-  res.json({ message: `contact ${contactRemovedById.name} deleted` });
+  if (noticesRemovedById === null) {
+    throw errorValidation(404, `Notices with id:${id} not found`);
+  }
+  res.json({ message: `notices ${noticesRemovedById.name} deleted` });
 };
 // const contactUpdateController = async (req, res, next) => {
 //   const {

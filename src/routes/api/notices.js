@@ -1,29 +1,42 @@
 // const express = require("express");
 const { schemas } = require('../../../schemas/noticesSchemas');
-const ctrl = require('../../controllers/noticesController');
+const { ctrlWrapper } = require('../../../middlewares');
+const {
+  getNoticesByCategory,
+  addNewNoticesController,
+  noticesByIdController,
+  deleteNoticesController,
+  addToFavoriteNoticesController,
+  getFavoriteNotices,
+  removeFromFavoriteNotices,
+} = require('../../controllers');
 // const { upload } = require("../../middlewares/upload");
 const { validation } = require('../../../middlewares');
 
 const express = require('express');
+
 const router = express.Router();
+
 // router.get('/', ctrl.getNoticesListController);
-router.get('/', ctrl.getNoticesByCategory);
+
+router.get('/', ctrlWrapper(getNoticesByCategory));
+router.get('/favorite', ctrlWrapper(getFavoriteNotices));
 
 // router.get('/:noticesId', authenticate, asyncWrapper(noticesByIdController));
-router.get('/:noticesId', ctrl.noticesByIdController);
+router.get('/:noticesId', ctrlWrapper(noticesByIdController));
 router.post(
   '/',
   //   upload.single('avatar'),
   validation(schemas.addNoticesSchema),
-  ctrl.addNewNoticesController
+  ctrlWrapper(addNewNoticesController)
 );
-router.delete('/:noticesId', ctrl.deleteNoticesController);
-
+router.delete('/:noticesId', ctrlWrapper(deleteNoticesController));
+router.delete('/:noticesId/favorite', ctrlWrapper(removeFromFavoriteNotices));
 router.patch(
   '/:noticesId/favorite',
 
   validation(schemas.schemaFavoritePatch),
-  ctrl.changeFavoriteNoticesController
+  ctrlWrapper(addToFavoriteNoticesController)
 );
 
 module.exports = router;
