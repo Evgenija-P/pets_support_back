@@ -2,9 +2,8 @@ const express = require('express');
 const router = express.Router();
 
 const { ctrlWrapper } = require('../../helpers');
+const { refresh: ctrl } = require('../../controllers');
 
-const { sponsors: ctrl } = require('../../controllers');
-
-router.get('/', ctrlWrapper(ctrl.getSponsors));
+router.get('/refresh', ctrlWrapper(ctrl.refreshToken));
 
 module.exports = router;
