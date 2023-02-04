@@ -1,2 +1,4 @@
 const Notices = require('./NoticesModel');
-module.exports = { Notices };
+const News = require('./news');
+
+module.exports = { Notices, News };

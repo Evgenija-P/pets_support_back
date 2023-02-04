@@ -4,7 +4,6 @@ const router = express.Router();
 const { ctrlWrapper } = require('../../helpers');
 const { news: ctrl } = require('../../controllers');
 
-
-router.get('/news', ctrlWrapper(ctrl.getNews));
+router.get('/', ctrlWrapper(ctrl.getNews));
 
 module.exports = router;
