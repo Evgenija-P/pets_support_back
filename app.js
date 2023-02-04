@@ -10,8 +10,6 @@ const petsRouter = require('./src/routes/api/pets');
 const newsRouter = require('./src/routes/api/news');
 const sponsorsRouter = require('./src/routes/api/sponsors');
 
-const refreshTokenRouter = require('./src/routes/api/refreshToken');
-
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';
@@ -25,8 +23,6 @@ app.use('/api/users', usersRouter);
 app.use('/api/pets', petsRouter);
 app.use('/api/news', newsRouter);
 app.use('/api/sponsors', sponsorsRouter);
-
-app.use('/api/auth', refreshTokenRouter);
 
 app.use((req, res) => {
   res.status(404).json({ message: 'Not found' });
