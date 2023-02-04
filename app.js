@@ -3,11 +3,10 @@ const logger = require('morgan');
 const cors = require('cors');
 require('dotenv').config();
 
-const usersRouter = require('./src/routes/api/users');
-const petsRouter = require('./src/routes/api/pets');
-const newsRouter = require('./src/routes/api/news');
-const sponsorsRouter = require('./src/routes/api/sponsors');
-const noticesRouter = require('./src/routes/api/notices');
+const usersRouter = require('./routes/api/users');
+const petsRouter = require('./routes/api/pets');
+const newsRouter = require('./routes/api/news');
+const sponsorsRouter = require('./routes/api/sponsors');
 
 const app = express();
 
