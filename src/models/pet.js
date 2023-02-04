@@ -6,6 +6,8 @@ const petSchema = new Schema(
   {
     name: {
       type: String,
+      minlength: 2,
+      maxlength: 16,
       required: [true, 'Name is required'],
     },
     birthday: {
@@ -14,6 +16,8 @@ const petSchema = new Schema(
     },
     breed: {
       type: String,
+      minlength: 2,
+      maxlength: 16,
       required: [true, 'Breed is required'],
     },
     photoURL: {
@@ -22,6 +26,8 @@ const petSchema = new Schema(
     },
     comments: {
       type: String,
+      minlength: 8,
+      maxlength: 120,
       default: null,
     },
     owner: {
@@ -36,10 +42,10 @@ const petSchema = new Schema(
 petSchema.post('save', handleMongooseError);
 
 const petJoiSchema = Joi.object({
-  name: Joi.string().min(2).required(),
+  name: Joi.string().min(2).max(16).required(),
   birthday: Joi.date().required(),
-  breed: Joi.string().min(2).required(),
-  comments: Joi.string().allow(null, ''),
+  breed: Joi.string().min(2).max(16).required(),
+  comments: Joi.string().min(8).max(120).allow(null, ''),
 });
 
 const Pet = model('pet', petSchema);
