@@ -25,5 +25,60 @@
       "name": "sponsors",
       "description": "Sponsors endpoints"
     }
-  ]
+  ],
+  "paths": {
+    "/api/news": {
+      "get": {
+        "tags": ["news"],
+        "summary": "Receiving news",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNewsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "GetNewsResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "string",
+              "description": "Object news"
+            }
+          }
+        },
+        "example": {
+          "news": {
+            "_id": 0,
+            "title": "string",
+            "url": "string",
+            "description": "string",
+            "date": "2022-08-12"
+          }
+        }
+      }
+    }
+  }
 }
