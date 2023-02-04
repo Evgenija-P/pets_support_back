@@ -24,7 +24,7 @@ const noticesShema = new mongoose.Schema(
     // comments: { type: String, required: true },
     // sex: { type: String, enum: sexList, required: true },
     // price: { type: String, required: false, default: null },
-    // petAvatarURL: { type: String, require: true },
+    // petImageURL: { type: String, require: true },
     categoryName: {
       type: String,
       enum: categoryNameList,

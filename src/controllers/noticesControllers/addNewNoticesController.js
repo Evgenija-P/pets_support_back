@@ -7,8 +7,16 @@ const addNewNoticesController = async (req, res, next) => {
   //     body: { name, email, phone, favorite },
   //   } = req;
   const {
-    body: { name, title, categoryName },
+    body: { name, title, categoryName, price, location, sex, birthdate },
   } = req;
+  console.log('name', name);
+  console.log('title', title);
+  console.log('categoryName', categoryName);
+  console.log('price', price);
+  console.log('location', location);
+  console.log('sex', sex);
+  console.log('birthdate', birthdate);
+
   //   const { _id: owner } = user;
   //   const NewNotices = await addNewContact({ name, email, phone, favorite, owner });
 
