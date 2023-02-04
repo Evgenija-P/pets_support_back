@@ -7,7 +7,7 @@ const usersRouter = require('./routes/api/users');
 const petsRouter = require('./routes/api/pets');
 const newsRouter = require('./routes/api/news');
 const sponsorsRouter = require('./routes/api/sponsors');
-
+const noticesRouter = require('./src/routes/api/notices');
 const app = express();
 
 const formatsLogger = app.get('env') === 'development' ? 'dev' : 'short';

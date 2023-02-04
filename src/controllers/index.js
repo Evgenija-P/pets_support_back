@@ -1,7 +1,6 @@
 module.exports = {
   news,
   sponsors,
-
   getNoticesByCategory,
   addNewNoticesController,
   noticesByIdController,
