@@ -6,9 +6,17 @@ const storage = multer.diskStorage({
   filename: (req, file, cb) => {
     const { _id: userId } = req.user;
     const [name, extention] = file.originalname.split('.');
-
     const fileName = `user_${userId}_${name}_${Date.now()}.${extention}`;
 
+const multerConfig = multer.diskStorage({
+    destination: path.join(__dirname, "../../", 'temp')
+})
+
+const upload = multer(
+    {
+        storage: multerConfig
+    }
+) 
     cb(null, fileName);
   },
 });

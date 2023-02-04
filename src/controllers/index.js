@@ -1,5 +1,7 @@
 const news = require('./news');
 const sponsors = require('./sponsors');
+const auth = require('./auth')
+
 const {
   getNoticesByCategory,
   addNewNoticesController,
@@ -10,9 +12,11 @@ const {
   removeFromFavoriteNotices,
 } = require('./noticesControllers');
 
+
 module.exports = {
   news,
   sponsors,
+  auth,
   getNoticesByCategory,
   addNewNoticesController,
   noticesByIdController,
