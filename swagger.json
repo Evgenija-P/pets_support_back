@@ -1,0 +1,29 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0",
+    "title": "Swagger test-Petly",
+    "description": "Final project of team #7"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "users",
+      "description": "Operations about user"
+    },
+    {
+      "name": "pets",
+      "description": "Everything about your Pets"
+    },
+    {
+      "name": "news",
+      "description": "News endpoints"
+    },
+    {
+      "name": "sponsors",
+      "description": "Sponsors endpoints"
+    }
+  ]
+}
