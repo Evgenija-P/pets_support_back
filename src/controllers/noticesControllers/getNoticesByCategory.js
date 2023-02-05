@@ -12,7 +12,7 @@ const getNoticesByCategory = async (req, res, next) => {
     throw errorValidation(400, `invalid categoryName`);
   }
   console.log('categoryName', categoryName);
-
+const noticesList = await Notices.find({ categoryName: categoryName });
   res.json({ message: noticesList });
   // };
   // module.exports = { getNoticesByCategory: ctrlWrapper(getNoticesByCategory) };
