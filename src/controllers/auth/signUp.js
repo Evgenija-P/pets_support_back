@@ -32,10 +32,12 @@ const signUp = async (req, res, next) => {
     await emails.sendEmail(verifyEmail)
 
     res.status(201).json({
-        message: "Successful created",
-        user: {
+        status: "Success",
+        code: 201,
+        data: {
             name: newUser.name,
             email: newUser.email,
+            birthday: newUser.birthday,
             phone: newUser.phone,
             city: newUser.city
         }
