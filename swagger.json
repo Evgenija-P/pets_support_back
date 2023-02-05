@@ -1,0 +1,195 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "version": "1.0",
+    "title": "Swagger test-Petly",
+    "description": "Final project of team #7"
+  },
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "servers": [{ "url": "http://localhost:3000" }],
+  "tags": [
+    {
+      "name": "users",
+      "description": "Operations about user"
+    },
+    {
+      "name": "pets",
+      "description": "Everything about your Pets"
+    },
+    {
+      "name": "news",
+      "description": "News endpoints"
+    },
+    {
+      "name": "sponsors",
+      "description": "Sponsors endpoints"
+    }
+  ],
+  "paths": {
+    "/api/users/signup": {
+      "post": {
+        "tags": ["users"],
+        "summary": "User registration",
+        "parameters": [],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegistrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegistrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "409": {
+            "description": "Email in use",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/news": {
+      "get": {
+        "tags": ["news"],
+        "summary": "Receiving news",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNewsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RegistrationRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "User's name"
+          },
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "phone": {
+            "type": "string",
+            "description": "User's phone"
+          },
+          "city": {
+            "type": "string",
+            "description": "User's city"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "RegistrationResponse": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "userId": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "phone": {
+              "type": "string",
+              "description": "User's phone"
+            },
+            "city": {
+              "type": "string",
+              "description": "User's city"
+            }
+          }
+        },
+        "example": {
+          "user": {
+            "name": "Toni",
+            "email": "starc@gmail.com",
+            "phone": "900-45-45",
+            "city": "Dnipro"
+          }
+        }
+      },
+      "GetNewsResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "string",
+              "description": "Object news"
+            }
+          }
+        },
+        "example": {
+          "news": {
+            "_id": 0,
+            "title": "string",
+            "url": "string",
+            "description": "string",
+            "date": "2022-08-12"
+          }
+        }
+      },
+      "securitySchemes": {
+        "Bearer": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    }
+  }
+}

@@ -1,2 +1,7 @@
 const Notices = require('./NoticesModel');
-module.exports = { Notices };
+const News = require('./news');
+const User = require('./user');
+const Sponsors = require('./sponsors');
+const pet = require('./pet');
+
+module.exports = { Notices, News, User, Sponsors, pet };
