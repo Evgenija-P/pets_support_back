@@ -1,5 +1,5 @@
-const emails = require('./email')
+const emails = require('./email');
 
 module.exports = {
-    emails,
-}
+  emails,
+};

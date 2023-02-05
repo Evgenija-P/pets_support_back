@@ -17,8 +17,8 @@ const {
 router.post(
   '/',
   authenticate,
-  validation(petJoiSchema),
   upload.single('avatar'),
+  validation(petJoiSchema),
   ctrlWrapper(ctrl.addPet)
 );
 
