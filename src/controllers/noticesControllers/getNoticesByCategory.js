@@ -3,8 +3,6 @@ const { Notices } = require('../../models');
 const { errorValidation } = require('../../helpers');
 
 const getNoticesByCategory = async (req, res, next) => {
-
-
   const categoryName = req.params.categoryName;
   //   const categoryName = req.params.categoryName;
   // const { categoryName = 'sell' } = req.query;
@@ -12,7 +10,7 @@ const getNoticesByCategory = async (req, res, next) => {
     throw errorValidation(400, `invalid categoryName`);
   }
   console.log('categoryName', categoryName);
-const noticesList = await Notices.find({ categoryName: categoryName });
+  const noticesList = await Notices.find({ categoryName: categoryName });
   res.json({ message: noticesList });
   // };
   // module.exports = { getNoticesByCategory: ctrlWrapper(getNoticesByCategory) };
