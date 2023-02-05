@@ -8,48 +8,38 @@ const {
   validateId,
   upload,
 } = require('../../middlewares');
-const {
-  getNoticesByCategory,
-  getAllNoticesList,
-  addNewNotices,
-  // getNoticesById,
-  deleteNotices,
-  addToFavoriteNotices,
-  getFavoriteNotices,
-  removeFromFavoriteNotices,
-  getNoticesByOwner,
-} = require('../../controllers');
+const { notices: ctrl } = require('../../controllers');
 
-router.get('/', ctrlWrapper(getAllNoticesList));
+router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
 
-// router.get('/:noticesId', ctrlWrapper(getNoticesById));
+// router.get('/:noticesId', ctrlWrapper(ctrl.getNoticesById));
 
-router.get('/category/:categoryName', ctrlWrapper(getNoticesByCategory));
+router.get('/category/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
 
 router.post(
   '/',
   authenticate,
   upload.single('petImage'),
   validation(schemas.addNoticesSchema),
-  ctrlWrapper(addNewNotices)
+  ctrlWrapper(ctrl.addNewNotices)
 );
 
-router.get('/own/favorite', authenticate, ctrlWrapper(getFavoriteNotices));
+router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
 
-router.get('/own', authenticate, ctrlWrapper(getNoticesByOwner));
+router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
 
 router.delete(
   '/own/:noticesId',
   authenticate,
   validateId,
-  ctrlWrapper(deleteNotices)
+  ctrlWrapper(ctrl.deleteNotices)
 );
 
 router.patch(
   '/own/:noticesId/favorite',
   authenticate,
   validateId,
-  ctrlWrapper(removeFromFavoriteNotices)
+  ctrlWrapper(ctrl.removeFromFavoriteNotices)
 );
 
 router.post(
@@ -57,7 +47,7 @@ router.post(
   authenticate,
   validateId,
   // validation(schemas.schemaFavoritePatch),
-  ctrlWrapper(addToFavoriteNotices)
+  ctrlWrapper(ctrl.addToFavoriteNotices)
 );
 
 module.exports = router;
