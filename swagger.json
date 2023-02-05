@@ -74,7 +74,6 @@
         "tags": ["users"],
         "summary": "Logs user into the system",
         "parameters": [],
-        "security": [{ "Bearer": [] }],
         "requestBody": {
           "description": "Login object",
           "required": true,
@@ -120,6 +119,35 @@
         "responses": {
           "204": {
             "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/users/current": {
+      "get": {
+        "tags": ["users"],
+        "summary": "User current",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "User's info was received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrentResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -176,6 +204,73 @@
           "500": {
             "description": "Server error",
             "content": {}
+          }
+        }
+      }
+    },
+    "/api/pets": {
+      "post": {
+        "tags": ["pets"],
+        "summary": "Adding animal user card",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Pet description",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PetRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Pet was added",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/pets/petId": {
+      "delete": {
+        "tags": ["pets"],
+        "summary": "Pet was deleted",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "petId",
+            "required": true,
+            "type": "string",
+            "description": "pet ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Delete object",
+          "required": true,
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
           }
         }
       }
@@ -237,6 +332,10 @@
             "city": {
               "type": "string",
               "description": "User's city"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "Date of Birth"
             }
           }
         },
@@ -244,6 +343,7 @@
           "user": {
             "name": "Toni",
             "email": "starc@gmail.com",
+            "birthday": "null",
             "phone": "900-45-45",
             "city": "Dnipro"
           }
@@ -295,6 +395,10 @@
             "city": {
               "type": "string",
               "description": "User's city"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "Date of Birth"
             }
           }
         },
@@ -303,8 +407,27 @@
           "user": {
             "name": "Toni",
             "email": "starc@gmail.com",
+            "birthday": "null",
             "phone": "900-45-45",
             "city": "Dnipro"
+          }
+        }
+      },
+      "CurrentResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Object current"
+            }
+          }
+        },
+        "example": {
+          "data": {
+            "type": "object",
+            "description": "Object information about users"
           }
         }
       },
@@ -320,12 +443,9 @@
           }
         },
         "example": {
-          "news": {
-            "_id": 0,
-            "title": "string",
-            "url": "string",
-            "description": "string",
-            "date": "2022-08-12"
+          "data": {
+            "type": "object",
+            "description": "Object information about news"
           }
         }
       },
@@ -347,12 +467,74 @@
           }
         }
       },
-      "securitySchemes": {
-        "Bearer": {
-          "type": "http",
-          "scheme": "bearer",
-          "bearerFormat": "JWT"
+      "PetRequest": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Pet name"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "pet's birthday"
+            },
+            "breed": {
+              "type": "string",
+              "description": "pet's breed"
+            },
+            "comments": {
+              "type": "string",
+              "description": "comments owner"
+            }
+          }
+        },
+        "example": {
+          "name": "tirecs",
+          "birthday": "01.02.22",
+          "breed": "dog",
+          "comments": "La lala bla blabla"
         }
+      },
+      "PetResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Pet name"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "pet's birthday"
+            },
+            "breed": {
+              "type": "string",
+              "description": "pet's breed"
+            },
+            "comments": {
+              "type": "string",
+              "description": "comments owner"
+            }
+          }
+        },
+        "example": {
+          "owner": {
+            "name": "tirecs",
+            "birthday": "01.02.22",
+            "breed": "dog",
+            "comments": "La lala bla blabla"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   }
