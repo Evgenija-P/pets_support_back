@@ -22,7 +22,7 @@ const {
 
 router.get('/', ctrlWrapper(getAllNoticesList));
 
-router.get('/:noticesId', ctrlWrapper(getNoticesById));
+// router.get('/:noticesId', ctrlWrapper(getNoticesById));
 
 router.get('/category/:categoryName', ctrlWrapper(getNoticesByCategory));
 
@@ -53,7 +53,7 @@ router.patch(
 );
 
 router.post(
-  '/:noticesId/favorite',
+  '/own/:noticesId/favorite',
   authenticate,
   validateId,
   // validation(schemas.schemaFavoritePatch),
