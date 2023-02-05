@@ -4,7 +4,7 @@ const { emails } = require('../../services')
 
 const { BASE_URL } = process.env
 
-const reVerify = async (req, res) => {
+const resendVerificationEmail = async (req, res) => {
     const { email } = req.body;
     if (!email) {
         throw HttpError(400, "Missing required field email")
@@ -22,9 +22,11 @@ const reVerify = async (req, res) => {
 
     await emails.sendEmail(verifyEmail)
 
-     res.json({
-        message: "Verification email sent"
+    res.json({
+        status: "Success",
+        code: 200,
+        message: "Verification email sent",
     })
 }
 
-module.exports = reVerify;
+module.exports = resendVerificationEmail;

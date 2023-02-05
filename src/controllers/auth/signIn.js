@@ -33,9 +33,12 @@ const signIn = async (req, res, next) => {
 
     res.json({
         token,
-         user: {
+        status: "Success",
+        code: 200,
+        data: {
             name: user.name,
             email: user.email,
+            birthday: user.birthday,
             phone: user.phone,
             city: user.city
         }
