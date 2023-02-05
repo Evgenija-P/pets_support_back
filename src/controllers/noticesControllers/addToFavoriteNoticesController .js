@@ -1,31 +1,35 @@
-const { Notices } = require('../../models');
+const { Favorite } = require('../../models');
 // const { ctrlWrapper } = require('../../../middlewares');
-const { HttpError } = require('../../helpers');
+// const { HttpError } = require('../../helpers');
 
 const addToFavoriteNoticesController = async (req, res, next) => {
   const {
-    body,
-    //   user: { _id: owner },
+    // body,
+    user: { _id: owner },
   } = req;
-  const id = req.params.noticesId;
-  // const contactUpdated = await updateStatusContact(id, { ...body, owner });
-  if (body === {} || body === null) {
-    throw HttpError(400, `missing field favorite`);
+  const idNotices = req.params.noticesId;
+  const isHaveFavorite = await Favorite.findOne({ owner });
+  if (isHaveFavorite === null) {
+    // console.log('create!');
+    const NewFavorite = new Favorite({ owner, favoriteList: [idNotices] });
+    const result = await NewFavorite.save();
+    res.json({ message: result });
   }
-  const { favorite } = body;
+  const { favoriteList: prevFavoriteList } = isHaveFavorite;
+  const newFavoriteList = new Set(prevFavoriteList);
 
-  const noticestUpdated = await Notices.findByIdAndUpdate(
-    id,
+  const favoriteUpdated = await Favorite.findOneAndUpdate(
+    { owner },
     {
-      $set: { favorite },
+      $set: { favoriteList: [...newFavoriteList.add(idNotices)] },
     },
     { new: true }
   );
-  if (noticestUpdated === null) {
-    throw HttpError(404, `Contact with id:${id} not found`);
-  }
+  // if (noticestUpdated === null) {
+  //   throw HttpError(404, `Contact with id:${id} not found`);
+  // }
 
-  res.json({ message: noticestUpdated });
+  res.json({ message: favoriteUpdated });
 };
 // module.exports = {
 //   addToFavoriteNoticesController: ctrlWrapper(addToFavoriteNoticesController),

@@ -10,14 +10,15 @@ const addNoticesSchema = Joi.object({
   location: Joi.string().required(),
   comments: Joi.string().min(8).max(120).required(),
   price: Joi.number().integer().min(1).optional(),
-  petImageURL: Joi.string().optional(),
+  // petImageURL: Joi.string().optional(),
   categoryName: Joi.string()
     .valid(...categoryNameList)
     .required(),
   sex: Joi.string()
     .valid(...sexList)
     .required(),
-  birthdate: Joi.date().format('DD-MM-YYYY').raw().required(),
+  // birthdate: Joi.date().format('DD-MM-YYYY').raw().required(),
+  birthdate: Joi.string().required(),
 });
 
 const getNoticesByCategorySchema = Joi.object({
