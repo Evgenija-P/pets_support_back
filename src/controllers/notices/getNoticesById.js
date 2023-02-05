@@ -1,7 +1,7 @@
 const { Notices } = require('../../models');
 const { HttpError } = require('../../helpers');
 
-const noticesByIdController = async (req, res, next) => {
+const getNoticesById = async (req, res, next) => {
   //   const {
   //     user: { _id: owner },
   //   } = req;
@@ -18,4 +18,4 @@ const noticesByIdController = async (req, res, next) => {
   }
   res.json({ message: notices });
 };
-module.exports = noticesByIdController;
+module.exports = getNoticesById;

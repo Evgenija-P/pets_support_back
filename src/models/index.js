@@ -1,4 +1,4 @@
-const Notices = require('./NoticesModel');
+const Notices = require('./notices');
 const News = require('./news');
 const User = require('./user');
 const Sponsors = require('./sponsors');

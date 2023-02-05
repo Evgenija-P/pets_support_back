@@ -1,7 +1,7 @@
 const { Notices } = require('../../models');
 const { HttpError } = require('../../helpers');
 
-const deleteNoticesController = async (req, res, next) => {
+const deleteNotices = async (req, res, next) => {
   const idNotices = req.params.noticesId;
 
   const {
@@ -17,4 +17,4 @@ const deleteNoticesController = async (req, res, next) => {
   }
   res.json({ message: `notices ${noticesRemoved.name} deleted` });
 };
-module.exports = deleteNoticesController;
+module.exports = deleteNotices;

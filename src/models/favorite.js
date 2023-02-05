@@ -10,7 +10,6 @@ const favoriteShema = new mongoose.Schema(
     },
 
     favoriteList: { type: Array, require: true },
-    // [{ type: mongoose.Schema.Types.ObjectId }]
   },
   { versionKey: false, timestamps: true }
 );

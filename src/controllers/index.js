@@ -5,15 +5,15 @@ const pets = require('./pets');
 
 const {
   getNoticesByCategory,
-  addNewNoticesController,
-  noticesByIdController,
-  deleteNoticesController,
-  addToFavoriteNoticesController,
+  addNewNotices,
+  getNoticesById,
+  deleteNotices,
+  addToFavoriteNotices,
   getFavoriteNotices,
   removeFromFavoriteNotices,
   getNoticesByOwner,
-  getAllNoticesListController,
-} = require('./noticesControllers');
+  getAllNoticesList,
+} = require('./notices');
 
 module.exports = {
   news,
@@ -21,12 +21,12 @@ module.exports = {
   auth,
   pets,
   getNoticesByCategory,
-  addNewNoticesController,
-  noticesByIdController,
-  deleteNoticesController,
-  addToFavoriteNoticesController,
+  addNewNotices,
+  getNoticesById,
+  deleteNotices,
+  addToFavoriteNotices,
   getFavoriteNotices,
   removeFromFavoriteNotices,
   getNoticesByOwner,
-  getAllNoticesListController,
+  getAllNoticesList,
 };

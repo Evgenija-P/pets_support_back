@@ -49,12 +49,6 @@ const noticesShema = new mongoose.Schema(
       enum: categoryNameList,
       required: [true, 'Set categoryName for notices'],
     },
-
-    // favorite: {
-    //   type: Boolean,
-    //   default: false,
-    // },
-    favorite: [{ type: mongoose.Schema.Types.ObjectId }],
   },
   { versionKey: false, timestamps: true }
 );
