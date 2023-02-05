@@ -11,6 +11,7 @@ const {
   getFavoriteNotices,
   removeFromFavoriteNotices,
   getNoticesByOwner,
+  getAllNoticesListController,
 } = require('./noticesControllers');
 
 module.exports = {
@@ -25,4 +26,5 @@ module.exports = {
   getFavoriteNotices,
   removeFromFavoriteNotices,
   getNoticesByOwner,
+  getAllNoticesListController,
 };

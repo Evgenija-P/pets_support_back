@@ -6,6 +6,7 @@ const addToFavoriteNoticesController = require('./addToFavoriteNoticesController
 const getFavoriteNotices = require('./getFavoriteNotices');
 const removeFromFavoriteNotices = require('./removeFromFavoriteNotices');
 const getNoticesByOwner = require('./getNoticesByOwner');
+const getAllNoticesListController = require('./getAllNoticesListController.js');
 module.exports = {
   getNoticesByCategory,
   addNewNoticesController,
@@ -15,4 +16,5 @@ module.exports = {
   getFavoriteNotices,
   removeFromFavoriteNotices,
   getNoticesByOwner,
+  getAllNoticesListController,
 };
