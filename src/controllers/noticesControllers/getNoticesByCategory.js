@@ -1,18 +1,23 @@
 const { Notices } = require('../../models');
-// const { ctrlWrapper } = require('../../../middlewares');
-const { errorValidation } = require('../../helpers');
+const { HttpError } = require('../../helpers');
 
+const PER_PAGE = 20;
 const getNoticesByCategory = async (req, res, next) => {
   const categoryName = req.params.categoryName;
   //   const categoryName = req.params.categoryName;
   // const { categoryName = 'sell' } = req.query;
+  const { page = 1, limit = PER_PAGE } = req.query;
+  const skip = (page - 1) * limit;
+
   if (!categoryName) {
-    throw errorValidation(400, `invalid categoryName`);
+    throw HttpError(400, `invalid categoryName`);
   }
-  console.log('categoryName', categoryName);
-  const noticesList = await Notices.find({ categoryName: categoryName });
+
+  const noticesList = await Notices.find({ categoryName }, '', {
+    skip,
+    limit,
+  });
+
   res.json({ message: noticesList });
-  // };
-  // module.exports = { getNoticesByCategory: ctrlWrapper(getNoticesByCategory) };
 };
 module.exports = getNoticesByCategory;

@@ -1,6 +1,6 @@
 const { Notices } = require('../../models');
 // const { ctrlWrapper } = require('../../../middlewares');
-const { errorValidation } = require('../../helpers');
+const { HttpError } = require('../../helpers');
 
 const removeFromFavoriteNotices = async (req, res, next) => {
   // const {
@@ -18,7 +18,7 @@ const removeFromFavoriteNotices = async (req, res, next) => {
     { new: true }
   );
   if (noticestUpdated === null) {
-    throw errorValidation(404, ` Notices with id:${id} not found`);
+    throw HttpError(404, ` Notices with id:${id} not found`);
   }
 
   res.json({ message: noticestUpdated });

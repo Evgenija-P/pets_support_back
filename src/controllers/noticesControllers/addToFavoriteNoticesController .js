@@ -1,6 +1,6 @@
 const { Notices } = require('../../models');
 // const { ctrlWrapper } = require('../../../middlewares');
-const { errorValidation } = require('../../helpers');
+const { HttpError } = require('../../helpers');
 
 const addToFavoriteNoticesController = async (req, res, next) => {
   const {
@@ -10,7 +10,7 @@ const addToFavoriteNoticesController = async (req, res, next) => {
   const id = req.params.noticesId;
   // const contactUpdated = await updateStatusContact(id, { ...body, owner });
   if (body === {} || body === null) {
-    throw errorValidation(400, `missing field favorite`);
+    throw HttpError(400, `missing field favorite`);
   }
   const { favorite } = body;
 
@@ -22,7 +22,7 @@ const addToFavoriteNoticesController = async (req, res, next) => {
     { new: true }
   );
   if (noticestUpdated === null) {
-    throw errorValidation(404, `Contact with id:${id} not found`);
+    throw HttpError(404, `Contact with id:${id} not found`);
   }
 
   res.json({ message: noticestUpdated });

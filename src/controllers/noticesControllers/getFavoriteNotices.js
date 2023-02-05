@@ -1,6 +1,6 @@
 const { Notices } = require('../../models');
 // const { ctrlWrapper } = require('../../../middlewares');
-// const { errorValidation } = require('../../helpers');
+// const { HttpError } = require('../../helpers');
 
 const getFavoriteNotices = async (req, res, next) => {
   //   const id = req.params.contactId;

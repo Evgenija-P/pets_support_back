@@ -1,6 +1,5 @@
 const { Notices } = require('../../models');
-// const { ctrlWrapper } = require('../../../middlewares');
-const { errorValidation } = require('../../helpers');
+const { HttpError } = require('../../helpers');
 
 const noticesByIdController = async (req, res, next) => {
   //   const {
@@ -9,20 +8,14 @@ const noticesByIdController = async (req, res, next) => {
   const id = req.params.noticesId;
   // const categoryName = req.params.categoryName;
   console.log('id', id);
-  // console.log('categoryName', categoryName);
   // const contact = await Notices.findById(id, owner).populate(
   //   'owner',
   //   'name email'
   // );
-  // if (contact === null) {
-  //   throw new WrongParametersError(`Contact with id:${id} not found`);
-  //   // return res.status(404).json({ message: "Not found" });
-  // }
   const notices = await Notices.findById(id);
   if (notices === null) {
-    throw errorValidation(404, `Notices with id:${id} not found`);
+    throw HttpError(404, `Notices with id:${id} not found`);
   }
   res.json({ message: notices });
 };
-// module.exports = { noticesByIdController: ctrlWrapper(noticesByIdController) };
 module.exports = noticesByIdController;
