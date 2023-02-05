@@ -3,8 +3,7 @@ const { Notices } = require('../../models');
 const { errorValidation } = require('../../helpers');
 
 const getNoticesByCategory = async (req, res, next) => {
-  const { page = 1, limit = 8 } = req.query;
-  const skip = (page - 1) * limit;
+
 
   const categoryName = req.params.categoryName;
   //   const categoryName = req.params.categoryName;
@@ -13,10 +12,6 @@ const getNoticesByCategory = async (req, res, next) => {
     throw errorValidation(400, `invalid categoryName`);
   }
   console.log('categoryName', categoryName);
-  const noticesList = await Notices.find({ categoryName: categoryName }, '', {
-    skip,
-    limit,
-  });
 
   res.json({ message: noticesList });
   // };
