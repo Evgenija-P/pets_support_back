@@ -12,7 +12,7 @@ const {
   getNoticesByCategory,
   getAllNoticesList,
   addNewNotices,
-  getNoticesById,
+  // getNoticesById,
   deleteNotices,
   addToFavoriteNotices,
   getFavoriteNotices,
