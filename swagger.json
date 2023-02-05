@@ -61,6 +61,65 @@
           "409": {
             "description": "Email in use",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/signin": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Logs user into the system",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Login object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Email or password is wrong",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/users/logout": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Logout user into the system",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "Authorization": {
+          "description": "Logout object",
+          "required": true,
+          "content": {
+            "application/json": {}
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Successful operation"
           }
         }
       }
@@ -82,12 +141,40 @@
               }
             }
           },
-          "400": {
-            "description": "Bad request (invalid request body)",
+          "404": {
+            "description": "NotFound",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/sponsors": {
+      "get": {
+        "tags": ["sponsors"],
+        "summary": "Project sponsors",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Sponsors received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSponsorsResponse"
+                }
+              }
+            }
           },
           "404": {
             "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
             "content": {}
           }
         }
@@ -125,7 +212,7 @@
         }
       },
       "RegistrationResponse": {
-        "type": "array",
+        "type": "object",
         "items": {
           "type": "object",
           "properties": {
@@ -162,13 +249,72 @@
           }
         }
       },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "User's email",
+            "format": "email"
+          },
+          "password": {
+            "type": "string",
+            "description": "User's password",
+            "example": "qwerty123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "token": {
+              "type": "string",
+              "description": "token"
+            },
+            "userId": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name"
+            },
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "phone": {
+              "type": "string",
+              "description": "User's phone"
+            },
+            "city": {
+              "type": "string",
+              "description": "User's city"
+            }
+          }
+        },
+        "example": {
+          "token": "string",
+          "user": {
+            "name": "Toni",
+            "email": "starc@gmail.com",
+            "phone": "900-45-45",
+            "city": "Dnipro"
+          }
+        }
+      },
       "GetNewsResponse": {
         "type": "object",
         "items": {
           "data": "object",
           "properties": {
             "data": {
-              "type": "string",
+              "type": "object",
               "description": "Object news"
             }
           }
@@ -180,6 +326,24 @@
             "url": "string",
             "description": "string",
             "date": "2022-08-12"
+          }
+        }
+      },
+      "GetSponsorsResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Object sponsors"
+            }
+          }
+        },
+        "example": {
+          "data": {
+            "type": "object",
+            "description": "Object information about sponsors"
           }
         }
       },
