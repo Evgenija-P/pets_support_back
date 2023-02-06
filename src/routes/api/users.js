@@ -3,12 +3,13 @@ const router = express.Router();
 
 const {ctrlWrapper} = require('../../helpers');
 const { auth } = require('../../controllers')
-const { authenticate, upload } = require('../../middlewares')
+const { authenticate, upload, validation } = require('../../middlewares')
+const { signIn, signUp } = require('../../schemas')
 
 
-router.post("/signup", ctrlWrapper(auth.signUp));
+router.post("/signup", validation(signUp), ctrlWrapper(auth.signUp));
 
-router.post("/signin", ctrlWrapper(auth.signIn));
+router.post("/signin", validation(signIn), ctrlWrapper(auth.signIn));
 
 router.post("/logout", authenticate, ctrlWrapper(auth.logOut));
 

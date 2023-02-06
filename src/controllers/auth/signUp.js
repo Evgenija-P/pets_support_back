@@ -19,9 +19,7 @@ const signUp = async (req, res, next) => {
 
     const verificationToken = nanoid();
 
-    const avatarURL = true;
-
-    const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken, avatarURL });
+    const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken });
     
     const verifyEmail = {
         to: email,
