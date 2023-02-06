@@ -3,7 +3,10 @@ const { News } = require('../../models');
 const { errorValidation } = require('../../helpers');
 
 const getNews = async (req, res) => {
-  const news = await News.find();
+  const { page = 1, limit = 6 } = req.query;
+  const skip = (page - 1) * limit;
+
+  const news = await News.find().skip(skip).limit(limit);
 
   if (!news) {
     throw errorValidation(404, 'News not received');
