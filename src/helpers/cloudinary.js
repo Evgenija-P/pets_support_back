@@ -10,28 +10,49 @@ cloudinary.config({
 
 // Upload
 
-const res = cloudinary.uploader.upload(
-  'https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg',
-  { public_id: 'olympic_flag' }
-);
+// const res = cloudinary.uploader.upload(
+//   'https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg',
+//   { public_id: 'olympic_flag' }
+// );
 
-res
-  .then(data => {
-    console.log(data);
+// res
+//   .then(data => {
+//     console.log(data);
 
-    console.log(data.secure_url);
-  })
-  .catch(err => {
-    console.log(err);
-  });
+//     console.log(data.secure_url);
+//   })
+//   .catch(err => {
+//     console.log(err);
+//   });
 
-// Generate
-const url = cloudinary.url('olympic_flag', {
-  width: 100,
-  height: 150,
-  Crop: 'fill',
-});
+// // Generate
+// const url = cloudinary.url('olympic_flag', {
+//   width: 100,
+//   height: 150,
+//   Crop: 'fill',
+// });
 
 // The output url
-console.log(url);
+// console.log(url);
 // https://res.cloudinary.com/<cloud_name>/image/upload/h_150,w_100/olympic_flag
+
+const uploadImage = async imagePath => {
+  // Use the uploaded file's name as the asset's public ID and
+  // allow overwriting the asset with new versions
+  const options = {
+    use_filename: true,
+    unique_filename: false,
+    overwrite: true,
+  };
+
+  try {
+    // Upload the image
+    const result = await cloudinary.uploader.upload(imagePath, options);
+    console.log(result);
+    // return result.public_id;
+    return result.url;
+  } catch (error) {
+    console.error(error);
+  }
+};
+module.exports = uploadImage;
