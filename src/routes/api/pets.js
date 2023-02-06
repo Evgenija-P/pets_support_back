@@ -10,15 +10,13 @@ const {
 } = require('../../middlewares');
 const { ctrlWrapper } = require('../../helpers');
 
-const {
-  pet: { petJoiSchema },
-} = require('../../models');
+const { petsSchemas } = require('../../schemas');
 
 router.post(
   '/',
   authenticate,
-  upload.single('avatar'),
-  validation(petJoiSchema),
+  upload.single('petPhoto'),
+  validation(petsSchemas.addPetSchema),
   ctrlWrapper(ctrl.addPet)
 );
 
