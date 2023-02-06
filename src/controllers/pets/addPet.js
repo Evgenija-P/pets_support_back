@@ -1,7 +1,7 @@
 const fs = require('fs/promises');
 
 const { Pet } = require('../../models/pet');
-const { uploadImage } = require('../../services/cloud');
+const { cloud } = require('../../services');
 
 const addPet = async (req, res) => {
   let photoURL = null;
@@ -9,7 +9,7 @@ const addPet = async (req, res) => {
 
   if (path) {
     const [filename] = req.file.filename.split('.');
-    const { url } = await uploadImage(path, {
+    const { url } = await cloud.uploadImage(path, {
       public_id: filename,
     });
     photoURL = url;
