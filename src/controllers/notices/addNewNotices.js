@@ -8,7 +8,6 @@ const addNewNotices = async (req, res, next) => {
   let petImageURL = '';
   if (req.file) {
     const { path: tempUpload } = req.file;
-    console.log('tempUpload', tempUpload);
     petImageURL = await uploadImage(tempUpload);
     try {
       await fs.unlink(tempUpload);
