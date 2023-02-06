@@ -11,10 +11,10 @@ const {
 const { notices: ctrl } = require('../../controllers');
 
 router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
-
-// router.get('/:noticesId', ctrlWrapper(ctrl.getNoticesById));
-
-router.get('/category/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
+router.get('/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
+router.get('/:categoryName/:noticesId', ctrlWrapper(ctrl.getNoticesById));
 
 router.post(
   '/',
@@ -23,10 +23,6 @@ router.post(
   validation(schemas.addNoticesSchema),
   ctrlWrapper(ctrl.addNewNotices)
 );
-
-router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
-
-router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
 
 router.delete(
   '/own/:noticesId',
@@ -46,7 +42,6 @@ router.post(
   '/own/:noticesId/favorite',
   authenticate,
   validateId,
-  // validation(schemas.schemaFavoritePatch),
   ctrlWrapper(ctrl.addToFavoriteNotices)
 );
 

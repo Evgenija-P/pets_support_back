@@ -43,7 +43,11 @@ const noticesShema = new mongoose.Schema(
     comments: { type: String, required: true, minlength: 8, maxlength: 120 },
     sex: { type: String, enum: sexList, required: true },
     price: { type: String, required: false, default: null },
-    petImageURL: { type: String, require: true },
+    petImageURL: {
+      type: String,
+      require: true,
+      default: '',
+    },
     categoryName: {
       type: String,
       enum: categoryNameList,
