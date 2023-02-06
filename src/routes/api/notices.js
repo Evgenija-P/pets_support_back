@@ -12,8 +12,9 @@ const { notices: ctrl } = require('../../controllers');
 
 router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
 router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
+router.get('/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
 router.get('/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
-router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
+
 router.get('/:categoryName/:noticesId', ctrlWrapper(ctrl.getNoticesById));
 
 router.post(
