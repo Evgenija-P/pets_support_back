@@ -10,10 +10,11 @@ const {
 } = require('../../middlewares');
 const { notices: ctrl } = require('../../controllers');
 
-// router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
-router.get('/', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
 router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
-router.get('/:noticesId', ctrlWrapper(ctrl.getNoticesById));
+router.get('/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
+router.get('/:categoryName/:noticesId', ctrlWrapper(ctrl.getNoticesById));
 
 router.post(
   '/',
@@ -22,8 +23,6 @@ router.post(
   validation(schemas.addNoticesSchema),
   ctrlWrapper(ctrl.addNewNotices)
 );
-
-router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
 
 router.delete(
   '/own/:noticesId',
