@@ -1,19 +1,27 @@
+const {
+  pet: { Pet },
+} = require('../../models');
 
+const current = async (req, res) => {
+  const { _id, email, name, city, phone, birthday, avatarURL } = req.user;
 
-const current = (req, res) => {
-    const { email, name, phone, city, token, birthday } = req.user;
-    res.json({
-        token,
-        status: "Success",
-        code: 200,
-        data: {
-            name,
-            email,
-            birthday,
-            phone,
-            city
-        }
-    })
-}
+  const currentUserPets = await Pet.find({ owner: _id });
+  const currentUserData = {
+    email,
+    name,
+    city,
+    phone,
+    birthday,
+    avatarURL,
+    pets: currentUserPets,
+  };
+
+  res.json({
+    status: 'Success',
+    code: 200,
+    message: "user's info was received",
+    data: currentUserData,
+  });
+};
 
 module.exports = current;

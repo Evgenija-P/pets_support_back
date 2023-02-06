@@ -1,42 +1,48 @@
-// const express = require("express");
-const { schemas } = require('../../schemas');
-const { ctrlWrapper } = require('../../middlewares');
-const {
-  getNoticesByCategory,
-  addNewNoticesController,
-  noticesByIdController,
-  deleteNoticesController,
-  addToFavoriteNoticesController,
-  getFavoriteNotices,
-  removeFromFavoriteNotices,
-} = require('../../controllers');
-// const { upload } = require("../../middlewares/upload");
-const { validation } = require('../../middlewares');
-
 const express = require('express');
-
 const router = express.Router();
+const { schemas } = require('../../schemas');
+const {
+  ctrlWrapper,
+  authenticate,
+  validation,
+  validateId,
+  upload,
+} = require('../../middlewares');
+const { notices: ctrl } = require('../../controllers');
 
-// router.get('/', ctrl.getNoticesListController);
+router.get('/', ctrlWrapper(ctrl.getAllNoticesList));
+router.get('/own', authenticate, ctrlWrapper(ctrl.getNoticesByOwner));
+router.get('/:categoryName', ctrlWrapper(ctrl.getNoticesByCategory));
+router.get('/own/favorite', authenticate, ctrlWrapper(ctrl.getFavoriteNotices));
+router.get('/:categoryName/:noticesId', ctrlWrapper(ctrl.getNoticesById));
 
-router.get('/:categoryName', ctrlWrapper(getNoticesByCategory));
-router.get('/favorite', ctrlWrapper(getFavoriteNotices));
-
-// router.get('/:noticesId', authenticate, asyncWrapper(noticesByIdController));
-router.get('/:categoryName/:noticesId', ctrlWrapper(noticesByIdController));
 router.post(
   '/',
-  //   upload.single('avatar'),
+  authenticate,
+  upload.single('petImage'),
   validation(schemas.addNoticesSchema),
-  ctrlWrapper(addNewNoticesController)
+  ctrlWrapper(ctrl.addNewNotices)
 );
-router.delete('/:noticesId', ctrlWrapper(deleteNoticesController));
-router.delete('/:noticesId/favorite', ctrlWrapper(removeFromFavoriteNotices));
-router.patch(
-  '/:noticesId/favorite',
 
-  validation(schemas.schemaFavoritePatch),
-  ctrlWrapper(addToFavoriteNoticesController)
+router.delete(
+  '/own/:noticesId',
+  authenticate,
+  validateId,
+  ctrlWrapper(ctrl.deleteNotices)
+);
+
+router.patch(
+  '/own/:noticesId/favorite',
+  authenticate,
+  validateId,
+  ctrlWrapper(ctrl.removeFromFavoriteNotices)
+);
+
+router.post(
+  '/own/:noticesId/favorite',
+  authenticate,
+  validateId,
+  ctrlWrapper(ctrl.addToFavoriteNotices)
 );
 
 module.exports = router;

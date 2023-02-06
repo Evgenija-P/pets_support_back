@@ -2,7 +2,12 @@ const express = require('express');
 const router = express.Router();
 
 const { pets: ctrl } = require('../../controllers');
-const { authenticate, validation, upload } = require('../../middlewares');
+const {
+  authenticate,
+  validation,
+  validateId,
+  upload,
+} = require('../../middlewares');
 const { ctrlWrapper } = require('../../helpers');
 
 const {
@@ -12,9 +17,11 @@ const {
 router.post(
   '/',
   authenticate,
-  validation(petJoiSchema),
   upload.single('avatar'),
+  validation(petJoiSchema),
   ctrlWrapper(ctrl.addPet)
 );
+
+router.delete('/:petId', authenticate, validateId, ctrlWrapper(ctrl.removePet));
 
 module.exports = router;
