@@ -2,10 +2,7 @@ const {
   pet: { Pet },
 } = require('../../models');
 const { HttpError } = require('../../helpers');
-const {
-  removeImageFromCloud,
-  parseIdFromImageURL,
-} = require('../../services/cloud');
+const { cloud } = require('../../services');
 
 const removePet = async (req, res) => {
   const { petId } = req.params;
@@ -17,9 +14,9 @@ const removePet = async (req, res) => {
     throw HttpError(404, `Pet with id ${petId} not found`);
   }
 
-  const imageId = parseIdFromImageURL(result.photoURL);
+  const imageId = cloud.parseIdFromImageURL(result.photoURL);
 
-  await removeImageFromCloud(imageId);
+  await cloud.removeImageFromCloud(imageId);
 
   res.json({
     status: 'Success',
