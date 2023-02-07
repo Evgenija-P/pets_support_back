@@ -14,9 +14,10 @@ const removePet = async (req, res) => {
     throw HttpError(404, `Pet with id ${petId} not found`);
   }
 
-  const imageId = cloud.parseIdFromImageURL(result.photoURL);
-
-  await cloud.removeImageFromCloud(imageId);
+  if (result.photoURL) {
+    const imageId = cloud.parseIdFromImageURL(result.photoURL);
+    await cloud.removeImageFromCloud(imageId);
+  }
 
   res.json({
     status: 'Success',
