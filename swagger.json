@@ -5,7 +5,7 @@
     "title": "Swagger test-Petly",
     "description": "Final project of team #7"
   },
-  "consumes": ["application/json"],
+  "consumes": ["application/json", "multipart/from-data"],
   "produces": ["application/json"],
   "servers": [{ "url": "http://localhost:3000" }],
   "tags": [
@@ -24,13 +24,17 @@
     {
       "name": "sponsors",
       "description": "Sponsors endpoints"
+    },
+    {
+      "name": "notices",
+      "description": "Notices endpoints"
     }
   ],
   "paths": {
     "/api/users/signup": {
       "post": {
         "tags": ["users"],
-        "summary": "User registration",
+        "summary": "User registration(Створити ендпоінтт реєстрації користувача)",
         "parameters": [],
         "requestBody": {
           "description": "Registration's object",
@@ -72,7 +76,7 @@
     "/api/users/signin": {
       "post": {
         "tags": ["users"],
-        "summary": "Logs user into the system",
+        "summary": "Logs user into the system (Створити ендпоінт логінізації користувача)",
         "parameters": [],
         "requestBody": {
           "description": "Login object",
@@ -106,7 +110,7 @@
     "/api/users/logout": {
       "post": {
         "tags": ["users"],
-        "summary": "Logout user into the system",
+        "summary": "Logout user into the system (Створити ендпоінт для логаута користувача)",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "Authorization": {
@@ -126,7 +130,7 @@
     "/api/users/current": {
       "get": {
         "tags": ["users"],
-        "summary": "User current",
+        "summary": "User current (Створити ендпоінт для отримання особистої інформації про користувача, інформації про тварин корисувача)",
         "parameters": [],
         "security": [{ "Bearer": [] }],
 
@@ -155,7 +159,7 @@
     "/api/news": {
       "get": {
         "tags": ["news"],
-        "summary": "Receiving news",
+        "summary": "Receiving news (Створити ендпоінт для отримання новин(захаркодить перелік новин в базу данних))",
         "parameters": [],
 
         "responses": {
@@ -183,7 +187,7 @@
     "/api/sponsors": {
       "get": {
         "tags": ["sponsors"],
-        "summary": "Project sponsors",
+        "summary": "Project sponsors (Створити ендпоінт для отримання контактної інформації про сервіси які надають послуги(захаркодить перелік новин в базу данних))",
         "parameters": [],
 
         "responses": {
@@ -211,7 +215,7 @@
     "/api/pets": {
       "post": {
         "tags": ["pets"],
-        "summary": "Adding animal user card",
+        "summary": "Adding animal user card (Створити ендпоінт для додавання карточки тварини користувача)",
         "parameters": [],
         "security": [{ "Bearer": [] }],
         "requestBody": {
@@ -247,10 +251,10 @@
         }
       }
     },
-    "/api/pets/petId": {
+    "/api/pets/{petId}": {
       "delete": {
         "tags": ["pets"],
-        "summary": "Pet was deleted",
+        "summary": "Pet was deleted (Створити ендпоінт для видалення карточки з твариною користувача)",
         "parameters": [
           {
             "in": "path",
@@ -261,16 +265,286 @@
           }
         ],
         "security": [{ "Bearer": [] }],
-        "requestBody": {
-          "description": "Delete object",
-          "required": true,
-          "content": {
-            "application/json": {}
-          }
-        },
+
         "responses": {
           "200": {
             "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/notices": {
+      "post": {
+        "post": {
+          "tags": ["notices"],
+          "summary": "New notices (Створити ендпоінт для додавання оголошень відповідно до обраної категорії)",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Registration's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewNoticesRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NewNoticesResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {}
+            },
+            "409": {
+              "description": "Provided email already exists",
+              "content": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/notices/{categoryName}": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Notices by category(Створити ендпоінт для отримання оголошень по категоріям)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryName",
+            "required": true,
+            "type": "string",
+            "description": "sell"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesByCategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid categoryName",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/{categoryName}/{noticesId}": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Get notices by ID (Створити ендпоінт для отримання одного оголошення)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticesId",
+            "required": true,
+            "type": "string",
+            "description": "notices ID"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Notices with ID not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/own": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Notices by owner(Створити ендпоінт для отримання оголошень авторизованого кристувача створених цим же користувачем)",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Owner received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/own/{noticesId}/favorite/": {
+      "post": {
+        "tags": ["notices"],
+        "summary": "Add to favorite notices (Створити ендпоінт для додавання оголошення до обраних)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticesId",
+            "required": true,
+            "type": "string",
+            "description": "pet ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesByCategoryResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      },
+      "patch": {
+        "tags": ["notices"],
+        "summary": "Remove from favorite notices(Створити ендпоінт для видалення оголошення авторизованого користувача доданих цим же до обраних)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticesId",
+            "required": true,
+            "type": "string",
+            "description": "pet ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/favorite": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Get favorite notices (Створити ендпоінт для отримання оголошень авторизованого користувача доданих ним же в обрані)",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User don't have favorite notices",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices//own/{noticesId}": {
+      "delete": {
+        "tags": ["notices"],
+        "summary": "Delete notices (Створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем)",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "noticesId",
+            "required": true,
+            "type": "string",
+            "description": "notices ID"
+          }
+        ],
+        "security": [{ "Bearer": [] }],
+
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Notices ${noticesRemoved.name} deleted",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -425,9 +699,29 @@
           }
         },
         "example": {
+          "status": "Success",
+          "code": 200,
+          "message": "user's info was received",
           "data": {
-            "type": "object",
-            "description": "Object information about users"
+            "email": "bot2@mail.com",
+            "name": "Bot2",
+            "city": "Dnipro",
+            "phone": "900-60-60",
+            "birthday": null,
+            "avatarURL": null,
+            "pets": [
+              {
+                "_id": "63e23c1353e6b886d96c2649",
+                "name": "catdog",
+                "birthday": "01.02.22",
+                "breed": "dogggg",
+                "photoURL": null,
+                "comments": "La lala vvvvds bla blabla",
+                "owner": "63e21225d01632cd516912b8",
+                "createdAt": "2023-02-07T11:54:59.125Z",
+                "updatedAt": "2023-02-07T11:54:59.125Z"
+              }
+            ]
           }
         }
       },
@@ -526,6 +820,42 @@
             "birthday": "01.02.22",
             "breed": "dog",
             "comments": "La lala bla blabla"
+          }
+        }
+      },
+      "AllNoticesListResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Object notices"
+            }
+          }
+        },
+        "example": {
+          "message": {
+            "type": "object",
+            "description": "Object information about notices"
+          }
+        }
+      },
+      "NoticesByCategoryResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "message": {
+              "type": "object",
+              "description": "Object notices by category"
+            }
+          }
+        },
+        "example": {
+          "message": {
+            "type": "object",
+            "description": "Object information about notices"
           }
         }
       }

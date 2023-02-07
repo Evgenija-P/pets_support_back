@@ -1,6 +1,7 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
-const Joi = require('joi');
+
+const sexList = ['male', 'female'];
 
 const petSchema = new Schema(
   {
@@ -20,6 +21,7 @@ const petSchema = new Schema(
       maxlength: 16,
       required: [true, 'Breed is required'],
     },
+    sex: { type: String, enum: sexList, required: true },
     photoURL: {
       type: String,
       default: null,
@@ -41,16 +43,8 @@ const petSchema = new Schema(
 
 petSchema.post('save', handleMongooseError);
 
-const petJoiSchema = Joi.object({
-  name: Joi.string().min(2).max(16).required(),
-  birthday: Joi.string().required(),
-  breed: Joi.string().min(2).max(16).required(),
-  comments: Joi.string().min(8).max(120).allow(null, ''),
-});
-
 const Pet = model('pet', petSchema);
 
 module.exports = {
   Pet,
-  petJoiSchema,
 };
