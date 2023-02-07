@@ -37,7 +37,8 @@ const signUp = async (req, res, next) => {
             email: newUser.email,
             birthday: newUser.birthday,
             phone: newUser.phone,
-            city: newUser.city
+            city: newUser.city,
+            avatarURL : newUser.avatarURL,
         }
     })
     

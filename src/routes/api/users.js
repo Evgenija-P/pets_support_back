@@ -13,7 +13,9 @@ router.post("/signin", validation(signIn), ctrlWrapper(auth.signIn));
 
 router.post("/logout", authenticate, ctrlWrapper(auth.logOut));
 
-router.get("/current", authenticate, ctrlWrapper(auth.current));
+router.get("/current", authenticate, validation(signUp), ctrlWrapper(auth.current));
+
+router.patch("/current", authenticate, ctrlWrapper(auth.updateUser))
 
 router.post("/verify", ctrlWrapper(auth.resendVerificationEmail));
 
