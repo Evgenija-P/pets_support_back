@@ -24,6 +24,10 @@
     {
       "name": "sponsors",
       "description": "Sponsors endpoints"
+    },
+    {
+      "name": "notices",
+      "description": "Notices endpoints"
     }
   ],
   "paths": {
@@ -271,6 +275,141 @@
         "responses": {
           "200": {
             "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/api/notices": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Notices List",
+        "parameters": [],
+
+        "responses": {
+          "200": {
+            "description": "Notices received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      },
+      "post": {
+        "post": {
+          "tags": ["notices"],
+          "summary": "New notices",
+          "parameters": [],
+          "security": [{ "Bearer": [] }],
+          "requestBody": {
+            "description": "Registration's object",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NewNoticesRequest"
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/NewNoticesResponse"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Bad request (invalid request body)",
+              "content": {}
+            },
+            "409": {
+              "description": "Provided email already exists",
+              "content": {}
+            }
+          }
+        }
+      }
+    },
+    "/api/notices/category/{categoryName}": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Notices by category",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "categoryName",
+            "required": true,
+            "type": "string",
+            "description": "sell"
+          }
+        ],
+        "requestBody": {},
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NoticesByCategoryResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid categoryName",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/api/notices/own": {
+      "get": {
+        "tags": ["notices"],
+        "summary": "Notices by owner",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "responses": {
+          "200": {
+            "description": "Owner received",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AllNoticesListResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -526,6 +665,42 @@
             "birthday": "01.02.22",
             "breed": "dog",
             "comments": "La lala bla blabla"
+          }
+        }
+      },
+      "AllNoticesListResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Object notices"
+            }
+          }
+        },
+        "example": {
+          "message": {
+            "type": "object",
+            "description": "Object information about notices"
+          }
+        }
+      },
+      "NoticesByCategoryResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "message": {
+              "type": "object",
+              "description": "Object notices by category"
+            }
+          }
+        },
+        "example": {
+          "message": {
+            "type": "object",
+            "description": "Object information about notices"
           }
         }
       }
