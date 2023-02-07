@@ -4,6 +4,7 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 require('dotenv').config();
+const multer = require('multer');
 
 console.clear();
 
@@ -35,8 +36,11 @@ app.use((req, res) => {
 
 app.use((err, req, res, next) => {
   // eslint-disable-next-line no-unused-vars
+  if (err instanceof multer.MulterError) {
+    err.status = 400;
+  }
   const { status = 500, message = 'server error' } = err;
-  res.status(status).json({ message: err.message });
+  res.status(status).json({ message });
 });
 
 module.exports = app;
