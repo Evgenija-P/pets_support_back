@@ -1,6 +1,8 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
 
+const sexList = ['male', 'female'];
+
 const petSchema = new Schema(
   {
     name: {
@@ -19,6 +21,7 @@ const petSchema = new Schema(
       maxlength: 16,
       required: [true, 'Breed is required'],
     },
+    sex: { type: String, enum: sexList, required: true },
     photoURL: {
       type: String,
       default: null,
