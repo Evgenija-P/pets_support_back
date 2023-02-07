@@ -275,41 +275,43 @@
     },
     "/api/notices": {
       "post": {
-        "post": {
-          "tags": ["notices"],
-          "summary": "New notices (Створити ендпоінт для додавання оголошень відповідно до обраної категорії)",
-          "parameters": [],
-          "security": [{ "Bearer": [] }],
-          "requestBody": {
-            "description": "Registration's object",
-            "required": true,
+        "tags": ["notices"],
+        "summary": "New notices (Створити ендпоінт для додавання оголошень відповідно до обраної категорії)",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewNoticesRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NewNoticesRequest"
+                  "$ref": "#/components/schemas/NewNoticesResponse"
                 }
               }
             }
           },
-          "responses": {
-            "201": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/NewNoticesResponse"
-                  }
-                }
-              }
-            },
-            "400": {
-              "description": "Bad request (invalid request body)",
-              "content": {}
-            },
-            "409": {
-              "description": "Provided email already exists",
-              "content": {}
-            }
+          "400": {
+            "description": "Bad request (invalid request body)",
+            "content": {}
+          },
+          "404": {
+            "description": "NotFound",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -618,7 +620,7 @@
             "name": "Toni",
             "email": "starc@gmail.com",
             "birthday": "null",
-            "phone": "900-45-45",
+            "phone": "(704) 398-7993",
             "city": "Dnipro"
           }
         }
@@ -856,6 +858,146 @@
           "message": {
             "type": "object",
             "description": "Object information about notices"
+          }
+        }
+      },
+      "NewNoticesRequest": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Pet name"
+            },
+            "title": {
+              "type": "string",
+              "description": "title"
+            },
+            "breed": {
+              "type": "string",
+              "description": "pet's breed"
+            },
+            "location": {
+              "type": "string",
+              "description": "location owner"
+            },
+            "comments": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "price": {
+              "type": "number",
+              "description": "price owner"
+            },
+            "categoryName": {
+              "type": "string",
+              "description": "categoryName"
+            },
+            "sex": {
+              "type": "string",
+              "description": "sex"
+            },
+            "birthdate": {
+              "type": "string",
+              "description": "birthdate pet"
+            }
+          }
+        },
+        "example": {
+          "name": "boby",
+          "title": "dog",
+          "breed": "haski",
+          "location": "Dnipro",
+          "comments": "bla bla bla",
+          "price": 500,
+          "categoryName": "sell",
+          "sex": "male",
+          "birthdate": "20.10.22"
+        }
+      },
+      "NewNoticesResponse": {
+        "type": "object",
+        "items": {
+          "type": "object",
+          "properties": {
+            "owner": {
+              "type": "string",
+              "description": "Pet name"
+            },
+            "email": {
+              "type": "string",
+              "description": "pet's birthday"
+            },
+            "phone": {
+              "type": "string",
+              "description": "pet's breed"
+            },
+            "title": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "name": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "birthdate": {
+              "type": "number",
+              "description": "comments owner"
+            },
+            "breed": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "location": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "comments": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "sex": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "price": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "petImageURL": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "categoryName": {
+              "type": "string",
+              "description": "comments owner"
+            },
+            "userId": {
+              "type": "number",
+              "description": "User's id",
+              "example": "32143232436545474"
+            }
+          }
+        },
+        "example": {
+          "message": {
+            "owner": "63e2ad86a05956d6dfa1777c",
+            "email": "bot3@mail.com",
+            "phone": "(704) 398-7993",
+            "title": "dog",
+            "name": "boby",
+            "birthdate": "20.10.22",
+            "breed": "haski",
+            "location": "Dnipro",
+            "comments": "bla bla bla",
+            "sex": "male",
+            "price": "500",
+            "petImageURL": "",
+            "categoryName": "sell",
+            "_id": "63e2adb7a05956d6dfa17781",
+            "createdAt": "2023-02-07T19:59:51.845Z",
+            "updatedAt": "2023-02-07T19:59:51.845Z"
           }
         }
       }
