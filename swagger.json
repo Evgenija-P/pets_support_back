@@ -123,6 +123,10 @@
         "responses": {
           "204": {
             "description": "Successful operation"
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -148,6 +152,39 @@
           "404": {
             "description": "NotFound",
             "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
+          }
+        }
+      },
+      "patch": {
+        "tags": ["users"],
+        "summary": "Update user (Створити ендпоінт для оновлення данних користувача та одного з полів контактної інформації про користувача)",
+        "parameters": [],
+        "security": [{ "Bearer": [] }],
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUsernRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateUsernResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server error",
@@ -269,6 +306,14 @@
         "responses": {
           "200": {
             "description": "Successful operation"
+          },
+          "404": {
+            "description": "Pet with id ${petId} not found",
+            "content": {}
+          },
+          "500": {
+            "description": "Server error",
+            "content": {}
           }
         }
       }
@@ -420,7 +465,7 @@
         }
       }
     },
-    "/api/notices/own/{noticesId}/favorite/": {
+    "/api/notices/{noticesId}/favorite/": {
       "post": {
         "tags": ["notices"],
         "summary": "Add to favorite notices (Створити ендпоінт для додавання оголошення до обраних)",
@@ -521,7 +566,7 @@
         }
       }
     },
-    "/api/notices//own/{noticesId}": {
+    "/api/notices/{noticesId}": {
       "delete": {
         "tags": ["notices"],
         "summary": "Delete notices (Створити ендпоінт для видалення оголошення авторизованого користувача створеного цим же користувачем)",
@@ -621,7 +666,8 @@
             "email": "starc@gmail.com",
             "birthday": "null",
             "phone": "(704) 398-7993",
-            "city": "Dnipro"
+            "city": "Dnipro",
+            "avatarURL": null
           }
         }
       },
@@ -675,6 +721,10 @@
             "birthday": {
               "type": "string",
               "description": "Date of Birth"
+            },
+            "avatarURL": {
+              "type": "string",
+              "description": "avatarURL"
             }
           }
         },
@@ -685,7 +735,8 @@
             "email": "starc@gmail.com",
             "birthday": "null",
             "phone": "900-45-45",
-            "city": "Dnipro"
+            "city": "Dnipro",
+            "avatarURL": null
           }
         }
       },
@@ -725,6 +776,62 @@
               }
             ]
           }
+        }
+      },
+      "UpdateUsernRequest": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": "User's email",
+              "format": "email"
+            },
+            "name": {
+              "type": "string",
+              "description": "User's name",
+              "example": "qwerty123"
+            },
+            "phone": {
+              "type": "string",
+              "description": "User's phone",
+              "example": "qwerty123"
+            },
+            "city": {
+              "type": "string",
+              "description": "User's city",
+              "example": "qwerty123"
+            },
+            "birthday": {
+              "type": "string",
+              "description": "User's birthday",
+              "example": "qwerty123"
+            }
+          }
+        },
+        "example": {
+          "email": "bot2@mail.com",
+          "name": "Bot2",
+          "city": "Dnipro",
+          "phone": "900-60-60",
+          "birthday": "01.02.20"
+        }
+      },
+      "UpdateUsernResponse": {
+        "type": "object",
+        "items": {
+          "data": "object",
+          "properties": {
+            "data": {
+              "type": "object",
+              "description": "Object current"
+            }
+          }
+        },
+        "example": {
+          "status": "Success",
+          "code": 200
         }
       },
       "GetNewsResponse": {
