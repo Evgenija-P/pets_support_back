@@ -4,6 +4,7 @@ const { Notices, Favorite } = require('../../models');
 const PER_PAGE = 20;
 
 const getFavoriteNotices = async (req, res, next) => {
+  console.log('getFavoriteNotices ');
   const {
     user: { _id: owner },
   } = req;

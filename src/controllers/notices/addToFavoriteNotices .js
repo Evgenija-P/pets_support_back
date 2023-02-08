@@ -1,6 +1,7 @@
 const { Favorite } = require('../../models');
 
 const addToFavoriteNotices = async (req, res, next) => {
+  console.log('addToFavoriteNotices');
   const {
     user: { _id: owner },
   } = req;
