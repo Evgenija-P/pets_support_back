@@ -29,6 +29,14 @@ const getFavoriteNotices = async (req, res, next) => {
       limit,
     }
   );
-  res.json({ message: favoriteNoticesList });
+  const totalHits = await Notices.find({
+    _id: { $in: [...favoriteList] },
+  }).count();
+
+  res.json({
+    message: favoriteNoticesList,
+    page,
+    totalHits,
+  });
 };
 module.exports = getFavoriteNotices;

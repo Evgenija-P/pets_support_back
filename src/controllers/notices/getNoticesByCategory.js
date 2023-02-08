@@ -17,7 +17,12 @@ const getNoticesByCategory = async (req, res, next) => {
     skip,
     limit,
   });
+  const totalHits = await Notices.find({ categoryName }).count();
 
-  res.json({ message: noticesList });
+  res.json({
+    message: noticesList,
+    page,
+    totalHits,
+  });
 };
 module.exports = getNoticesByCategory;

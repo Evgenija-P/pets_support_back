@@ -46,7 +46,7 @@ const noticesShema = new mongoose.Schema(
     petImageURL: {
       type: String,
       require: true,
-      default: '',
+      default: null,
     },
     categoryName: {
       type: String,
