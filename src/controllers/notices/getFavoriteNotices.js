@@ -1,5 +1,5 @@
 const { Notices, Favorite } = require('../../models');
-const { HttpError } = require('../../helpers');
+// const { HttpError } = require('../../helpers');
 
 const PER_PAGE = 20;
 
@@ -11,12 +11,22 @@ const getFavoriteNotices = async (req, res, next) => {
   const skip = (page - 1) * limit;
   const isHaveFavorite = await Favorite.findOne({ owner });
   if (isHaveFavorite === null) {
-    throw HttpError(404, `user don't have favorite notices `);
+    // throw HttpError(404, `user don't have favorite notices `);
+    res.json({
+      message: [],
+      page: 0,
+      totalHits: 0,
+    });
   }
   const { favoriteList } = isHaveFavorite;
 
   if (favoriteList.length === 0) {
-    throw HttpError(404, `user don't have favorite notices `);
+    // throw HttpError(404, `user don't have favorite notices `);
+    res.json({
+      message: [],
+      page: 0,
+      totalHits: 0,
+    });
   }
 
   const favoriteNoticesList = await Notices.find(
