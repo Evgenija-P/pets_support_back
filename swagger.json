@@ -7,7 +7,7 @@
   },
   "consumes": ["application/json", "multipart/from-data"],
   "produces": ["application/json"],
-  "servers": [{ "url": "http://localhost:3000" }],
+  "servers": [{ "url": "https://petly-brs3.onrender.com" }],
   "tags": [
     {
       "name": "users",

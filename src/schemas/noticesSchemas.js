@@ -1,4 +1,4 @@
-const Joi = require('Joi').extend(require('@joi/date'));
+const Joi = require('joi').extend(require('@joi/date'));
 
 const categoryNameList = ['sell', 'lost-found', 'for-free'];
 const sexList = ['male', 'female'];
