@@ -35,12 +35,13 @@ const signIn = async (req, res, next) => {
     status: 'Success',
     code: 200,
     data: {
+      _id: user._id,
       name: user.name,
       email: user.email,
       birthday: user.birthday,
       phone: user.phone,
       city: user.city,
-      avatarURL: user.avatarURL
+      avatarURL: user.avatarURL,
     },
   });
 };
