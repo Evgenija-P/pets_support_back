@@ -1,2 +1,11 @@
 const schemas = require('./noticesSchemas');
-module.exports = { schemas };
+const signIn = require('./signIn');
+const signUp = require('./signUp');
+const petsSchemas = require('./petsSchemas');
+
+module.exports = {
+  schemas,
+  signIn,
+  signUp,
+  petsSchemas,
+};

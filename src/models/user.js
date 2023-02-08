@@ -33,7 +33,7 @@ const userSchema = new Schema({
   },
   avatarURL: {
     type: String,
-    required: true,
+    default: null,
   },
   verify: {
     type: Boolean,
