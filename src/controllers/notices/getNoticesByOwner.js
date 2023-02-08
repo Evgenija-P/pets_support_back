@@ -12,6 +12,8 @@ const getNoticesByOwner = async (req, res, next) => {
     limit,
   });
 
-  res.json({ message: noticesList });
+  const totalHits = await Notices.find({ owner }).count();
+
+  res.json({ message: noticesList, page, totalHits });
 };
 module.exports = getNoticesByOwner;

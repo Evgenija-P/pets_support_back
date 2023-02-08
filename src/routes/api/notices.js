@@ -26,21 +26,21 @@ router.post(
 );
 
 router.delete(
-  '/own/:noticesId',
+  '/:noticesId',
   authenticate,
   validateId,
   ctrlWrapper(ctrl.deleteNotices)
 );
 
 router.patch(
-  '/own/:noticesId/favorite',
+  '/:noticesId/favorite',
   authenticate,
   validateId,
   ctrlWrapper(ctrl.removeFromFavoriteNotices)
 );
 
 router.post(
-  '/own/:noticesId/favorite',
+  '/:noticesId/favorite',
   authenticate,
   validateId,
   ctrlWrapper(ctrl.addToFavoriteNotices)
