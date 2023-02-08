@@ -7,6 +7,7 @@ const current = async (req, res) => {
 
   const currentUserPets = await Pet.find({ owner: _id });
   const currentUserData = {
+    _id,
     email,
     name,
     city,
