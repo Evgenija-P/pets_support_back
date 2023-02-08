@@ -3,10 +3,11 @@ const { handleMongooseError } = require('../helpers');
 
 const categoryNameList = ['sell', 'lost-found', 'for-free'];
 const sexList = ['male', 'female'];
-const phoneRegexp = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+const phoneRegexp = /^\+380\d{2}\d{3}\d{2}\d{2}$/;
 const emailRegexp =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+const dateRegexp =
+  /(^(0+?[1-9]|[12][0-9]|3[01])[-\.](0+?[1-9]|[1][0-12])[-\.]((19|20)\d\d))/;
 const noticesShema = new mongoose.Schema(
   {
     owner: {
@@ -37,7 +38,7 @@ const noticesShema = new mongoose.Schema(
       minlength: 2,
       maxlength: 16,
     },
-    birthdate: { type: String, require: true },
+    birthdate: { type: String, require: true, match: dateRegexp },
     breed: { type: String, required: true },
     location: { type: String, required: true },
     comments: { type: String, required: true, minlength: 8, maxlength: 120 },

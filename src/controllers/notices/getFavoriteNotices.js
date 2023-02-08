@@ -45,6 +45,7 @@ const getFavoriteNotices = async (req, res, next) => {
 
   res.json({
     message: favoriteNoticesList,
+    favoriteList,
     page,
     totalHits,
   });
