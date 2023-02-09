@@ -11,19 +11,19 @@ const getAllNoticesList = async (req, res, next) => {
   //   favoriteList = await Favorite.findOne({ owner });
   // }
   const { search = '' } = req.query;
-  console.log('getAllNoticesList');
+  // console.log('getAllNoticesList');
   const { page = 1, limit = PER_PAGE } = req.query;
   const skip = (page - 1) * limit;
   let noticesList = [];
   let totalHits = 0;
   if (search) {
-    console.log('search', search);
+    // console.log('search', search);
     // noticesList = await Notices.find({ categoryName, title: search }, '', {
     //   skip,
     //   limit,
     // });
     const searchRegexp = new RegExp(search);
-    console.log('searchRegex', searchRegexp);
+    // console.log('searchRegex', searchRegexp);
     noticesList = await Notices.find(
       {
         $or: [

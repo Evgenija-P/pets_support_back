@@ -5,15 +5,59 @@ const getNoticesByOwner = async (req, res, next) => {
   const {
     user: { _id: owner },
   } = req;
+  const { search = '' } = req.query;
+  let noticesList = [];
+  let totalHits = 0;
   const { page = 1, limit = PER_PAGE } = req.query;
   const skip = (page - 1) * limit;
-  const noticesList = await Notices.find({ owner }, '', {
-    skip,
-    limit,
-  });
+  if (search) {
+    // console.log('search', search);
+    // noticesList = await Notices.find({ categoryName, title: search }, '', {
+    //   skip,
+    //   limit,
+    // });
+    const searchRegexp = new RegExp(search);
+    // console.log('searchRegex', searchRegexp);
+    noticesList = await Notices.find(
+      {
+        $and: [
+          { owner },
+          {
+            $or: [
+              { comments: { $regex: searchRegexp } },
+              { title: { $regex: searchRegexp } },
+            ],
+          },
+        ],
+      },
+      '',
+      {
+        skip,
+        limit,
+      }
+    );
+    //  totalHits = await Notices.find({
+    //    $or: [{ comments: { $regex: search } }, { title: { $regex: search } }],
+    //  }).count();
+    totalHits = await Notices.find({
+      $and: [
+        { owner },
+        {
+          $or: [
+            { comments: { $regex: searchRegexp } },
+            { title: { $regex: searchRegexp } },
+          ],
+        },
+      ],
+    }).count();
+  } else {
+    noticesList = await Notices.find({ owner }, '', {
+      skip,
+      limit,
+    });
 
-  const totalHits = await Notices.find({ owner }).count();
-
-  res.json({ message: noticesList, page, totalHits });
+    totalHits = await Notices.find({ owner }).count();
+  }
+  res.json({ message: noticesList, page, totalHits, search });
 };
 module.exports = getNoticesByOwner;
