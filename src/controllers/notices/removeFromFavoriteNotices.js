@@ -2,7 +2,7 @@ const { Favorite } = require('../../models');
 const { HttpError } = require('../../helpers');
 
 const removeFromFavoriteNotices = async (req, res, next) => {
-  console.log('removeFromFavoriteNotices');
+  // console.log('removeFromFavoriteNotices');
   const {
     user: { _id: owner },
   } = req;
@@ -23,7 +23,7 @@ const removeFromFavoriteNotices = async (req, res, next) => {
     { new: true }
   );
 
-  res.json({ message: favoriteUpdated });
+  res.status(201).json({ message: favoriteUpdated });
 };
 
 module.exports = removeFromFavoriteNotices;

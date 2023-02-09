@@ -1,6 +1,7 @@
 const { Favorite } = require('../../models');
 
 const addToFavoriteNotices = async (req, res, next) => {
+  // console.log('addToFavoriteNotices');
   const {
     user: { _id: owner },
   } = req;
@@ -21,7 +22,9 @@ const addToFavoriteNotices = async (req, res, next) => {
     { new: true }
   );
 
-  res.json({ message: favoriteUpdated });
+  res.status(201).json({
+    message: favoriteUpdated,
+  });
 };
 
 module.exports = addToFavoriteNotices;

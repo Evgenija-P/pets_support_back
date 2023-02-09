@@ -4,7 +4,7 @@ const { HttpError } = require('../../helpers');
 const PER_PAGE = 20;
 const getNoticesByCategory = async (req, res, next) => {
   const categoryName = req.params.categoryName;
-
+  // console.log('getNoticesByCategory');
   // const { categoryName = 'sell' } = req.query;
   const { page = 1, limit = PER_PAGE } = req.query;
   const skip = (page - 1) * limit;

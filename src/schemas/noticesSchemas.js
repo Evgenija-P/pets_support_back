@@ -2,6 +2,8 @@ const Joi = require('joi').extend(require('@joi/date'));
 
 const categoryNameList = ['sell', 'lost-found', 'for-free'];
 const sexList = ['male', 'female'];
+const dateRegexp =
+  /(^(0+?[1-9]|[12][0-9]|3[01])[-\.](0+?[1-9]|[1][0-12])[-\.]((19|20)\d\d))/;
 const addNoticesSchema = Joi.object({
   name: Joi.string().min(2).max(16).required(),
   title: Joi.string().min(2).max(48).required(),
@@ -18,7 +20,7 @@ const addNoticesSchema = Joi.object({
     .valid(...sexList)
     .required(),
   // birthdate: Joi.date().format('DD-MM-YYYY').raw().required(),
-  birthdate: Joi.string().required(),
+  birthdate: Joi.string().pattern(dateRegexp).required(),
 });
 
 const schemas = {
