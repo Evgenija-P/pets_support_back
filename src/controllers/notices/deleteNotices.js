@@ -3,7 +3,7 @@ const { HttpError } = require('../../helpers');
 // const { cloud } = require('../../services');
 const deleteNotices = async (req, res, next) => {
   const idNotices = req.params.noticesId;
-  console.log('deleteNotices');
+  // console.log('deleteNotices');
   const {
     user: { _id: owner },
   } = req;

@@ -3,7 +3,7 @@ const { uploadImage } = require('../../helpers');
 const fs = require('fs/promises');
 
 const addNewNotices = async (req, res, next) => {
-  console.log('addNewNotices');
+  // console.log('addNewNotices');
   const { body, user } = req;
   const { _id: owner, email, phone } = user;
   let petImageURL = '';

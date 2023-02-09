@@ -2,7 +2,7 @@ const { Notices } = require('../../models');
 
 const PER_PAGE = 20;
 const getAllNoticesList = async (req, res, next) => {
-  console.log('getAllNoticesList');
+  // console.log('getAllNoticesList');
   // let favoriteList = null;
   // if (req.user) {
   //   const {
