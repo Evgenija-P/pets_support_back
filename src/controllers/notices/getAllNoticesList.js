@@ -10,17 +10,50 @@ const getAllNoticesList = async (req, res, next) => {
   //   } = req;
   //   favoriteList = await Favorite.findOne({ owner });
   // }
-
+  const { search = '' } = req.query;
+  console.log('getAllNoticesList');
   const { page = 1, limit = PER_PAGE } = req.query;
   const skip = (page - 1) * limit;
+  let noticesList = [];
+  let totalHits = 0;
+  if (search) {
+    console.log('search', search);
+    // noticesList = await Notices.find({ categoryName, title: search }, '', {
+    //   skip,
+    //   limit,
+    // });
+    const searchRegexp = new RegExp(search);
+    console.log('searchRegex', searchRegexp);
+    noticesList = await Notices.find(
+      {
+        $or: [
+          { comments: { $regex: searchRegexp } },
+          { title: { $regex: searchRegexp } },
+        ],
+      },
+      '',
+      {
+        skip,
+        limit,
+      }
+    );
+    totalHits = await Notices.find({
+      $or: [
+        { comments: { $regex: searchRegexp } },
+        { title: { $regex: searchRegexp } },
+      ],
+    }).count();
+  } else {
+    noticesList = await Notices.find({}, '', {
+      skip,
+      limit,
+    });
+    totalHits = await Notices.find({}).count();
+  }
 
-  const noticesList = await Notices.find({}, '', {
-    skip,
-    limit,
-  });
-  const totalHits = await Notices.find({}).count();
   res.json({
     message: noticesList,
+    search,
     // favoriteList,
     page,
     totalHits,
