@@ -5,10 +5,9 @@ const getNoticesByOwner = async (req, res, next) => {
   const {
     user: { _id: owner },
   } = req;
-  const { search = '' } = req.query;
   let noticesList = [];
   let totalHits = 0;
-  const { page = 1, limit = PER_PAGE } = req.query;
+  const { page = 1, limit = PER_PAGE, search = '' } = req.query;
   const skip = (page - 1) * limit;
   if (search) {
     // console.log('search', search);
@@ -58,6 +57,6 @@ const getNoticesByOwner = async (req, res, next) => {
 
     totalHits = await Notices.find({ owner }).count();
   }
-  res.json({ message: noticesList, page, totalHits, search });
+  res.json({ message: noticesList, page, totalHits, search, limit });
 };
 module.exports = getNoticesByOwner;

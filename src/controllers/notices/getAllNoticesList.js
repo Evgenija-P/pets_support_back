@@ -57,6 +57,7 @@ const getAllNoticesList = async (req, res, next) => {
     // favoriteList,
     page,
     totalHits,
+    limit,
   });
 };
 module.exports = getAllNoticesList;

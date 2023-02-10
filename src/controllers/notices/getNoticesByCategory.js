@@ -16,13 +16,8 @@ const getNoticesByCategory = async (req, res, next) => {
   let noticesList = [];
   let totalHits = 0;
   if (search) {
-    // console.log('search', search);
-    // noticesList = await Notices.find({ categoryName, title: search }, '', {
-    //   skip,
-    //   limit,
-    // });
     const searchRegexp = new RegExp(search);
-    console.log('searchRegex', searchRegexp);
+    // console.log('searchRegex', searchRegexp);
     noticesList = await Notices.find(
       {
         $and: [
@@ -68,6 +63,7 @@ const getNoticesByCategory = async (req, res, next) => {
     search,
     page,
     totalHits,
+    limit,
   });
 };
 module.exports = getNoticesByCategory;
