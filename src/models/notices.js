@@ -3,11 +3,14 @@ const { handleMongooseError } = require('../helpers');
 
 const categoryNameList = ['sell', 'lost-found', 'for-free'];
 const sexList = ['male', 'female'];
-const phoneRegexp = /^\+380\d{2}\d{3}\d{2}\d{2}$/;
-const emailRegexp =
-  /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const dateRegexp =
-  /(^(0+?[1-9]|[12][0-9]|3[01])[-\.](0+?[1-9]|[1][0-12])[-\.]((19|20)\d\d))/;
+const {
+  phoneRegexp,
+  emailRegex,
+  dateRegexp,
+  cityRegexp,
+  priceRegexp,
+} = require('../helpers/regExps');
+
 const noticesShema = new mongoose.Schema(
   {
     owner: {
@@ -18,7 +21,7 @@ const noticesShema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Email is required'],
-      match: emailRegexp,
+      match: emailRegex,
     },
     phone: {
       type: String,
@@ -40,10 +43,10 @@ const noticesShema = new mongoose.Schema(
     },
     birthdate: { type: String, require: true, match: dateRegexp },
     breed: { type: String, required: true },
-    location: { type: String, required: true },
+    location: { type: String, required: true, match: cityRegexp },
     comments: { type: String, required: true, minlength: 8, maxlength: 120 },
     sex: { type: String, enum: sexList, required: true },
-    price: { type: String, required: false, default: null },
+    price: { type: String, required: false, default: null, match: priceRegexp },
     petImageURL: {
       type: String,
       require: true,
