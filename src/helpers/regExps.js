@@ -13,8 +13,7 @@ const priceRegexp = /^[1-9]+[0-9]*$/;
 
 const userNameRegexp = /^([a-zA-Z]{1}|([a-zA-Z]{1,}['-]?[a-zA-Z])+)+$/;
 
-const passwordRegexp =
-  /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_]).{6,}$/;
+const passwordRegexp = /^\S*$/;
 
 module.exports = {
   phoneRegexp,
