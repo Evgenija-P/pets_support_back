@@ -1,7 +1,7 @@
 const { Notices } = require('../../models');
 const { uploadImage } = require('../../helpers');
 const fs = require('fs/promises');
-
+// const { cloud } = require('../../services');
 const addNewNotices = async (req, res, next) => {
   // console.log('addNewNotices');
   const { body, user } = req;
