@@ -44,6 +44,7 @@ const uploadImage = async imagePath => {
     use_filename: true,
     unique_filename: false,
     overwrite: true,
+    secure: true,
   };
 
   try {
@@ -51,7 +52,7 @@ const uploadImage = async imagePath => {
     const result = await cloudinary.uploader.upload(imagePath, options);
     console.log(result);
     // return result.public_id;
-    return result.url;
+    return result.secure_url;
   } catch (error) {
     console.error(error);
   }
