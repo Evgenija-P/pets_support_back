@@ -10,7 +10,7 @@ const addNoticesSchema = Joi.object({
   // location: Joi.array().items(Joi.string().required(), Joi.string().required()),
   location: Joi.string().pattern(cityRegexp).required(),
   comments: Joi.string().min(8).max(120).optional(),
-  price: Joi.string().pattern(priceRegexp).min(1).optional(),
+  price: Joi.string().pattern(priceRegexp).optional(),
   // petImageURL: Joi.string().optional(),
   categoryName: Joi.string()
     .valid(...categoryNameList)
