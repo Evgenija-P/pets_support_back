@@ -42,6 +42,7 @@ const signUp = async (req, res, next) => {
     // await emails.sendEmail(verifyEmail)
 
     res.status(201).json({
+        token,
         status: "Success",
         code: 201,
         data: {
