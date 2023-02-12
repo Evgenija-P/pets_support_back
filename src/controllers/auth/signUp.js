@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs');
-const {nanoid} = require('nanoid')
+// const { nanoid } = require('nanoid')
+const jwt = require('jsonwebtoken');
 
 const { User } = require('../../models');
 const { HttpError } = require('../../helpers')
 // const {emails} = require('../../services')
 
 // const { BASE_URL } = process.env;
+const { SECRET_KEY } = process.env;
 
 const signUp = async (req, res, next) => {
     const { email, password } = req.body;
@@ -17,9 +19,19 @@ const signUp = async (req, res, next) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const verificationToken = nanoid();
+    // const verificationToken = nanoid();
 
-    const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken });
+    const newUser = await User.create({ ...req.body, password: hashPassword });
+
+    
+    const payload = {
+        id: newUser._id,
+    };
+
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+
+    await User.findByIdAndUpdate(newUser._id, { token });
+
     
     // const verifyEmail = {
     //     to: email,
@@ -38,7 +50,7 @@ const signUp = async (req, res, next) => {
             birthday: newUser.birthday,
             phone: newUser.phone,
             city: newUser.city,
-            avatarURL : newUser.avatarURL,
+            avatarURL: newUser.avatarURL,
         }
     })
     
