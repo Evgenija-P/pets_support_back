@@ -83,8 +83,8 @@ const getFavoriteNotices = async (req, res, next) => {
       //         _id: { $in: [...favoriteList] },
       //       }).count();
       //     }
-
-      const favoriteNoticesList = await Favorite.find(
+      // const favoriteNoticesList = await Favorite.find(
+      await Favorite.find(
         {
           owner,
         },
@@ -95,14 +95,14 @@ const getFavoriteNotices = async (req, res, next) => {
         }
       );
       const { favoriteList } = isHaveFavorite;
-      console.log({
-        message: favoriteNoticesList,
-        favoriteList,
-        page,
-        totalHits: favoriteList.length,
-        limit,
-        search,
-      });
+      // console.log({
+      //   message: favoriteNoticesList,
+      //   favoriteList,
+      //   page,
+      //   totalHits: favoriteList.length,
+      //   limit,
+      //   search,
+      // });
       res.json({
         message: favoriteList,
         favoriteList,

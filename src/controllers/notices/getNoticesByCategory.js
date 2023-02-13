@@ -35,7 +35,7 @@ const getNoticesByCategory = async (req, res, next) => {
         skip,
         limit,
       }
-    );
+    ).sort({ createdAt: -1 });
     //  totalHits = await Notices.find({
     //    $or: [{ comments: { $regex: search } }, { title: { $regex: search } }],
     //  }).count();
@@ -54,7 +54,7 @@ const getNoticesByCategory = async (req, res, next) => {
     noticesList = await Notices.find({ categoryName }, '', {
       skip,
       limit,
-    });
+    }).sort({ createdAt: -1 });
     totalHits = await Notices.find({ categoryName }).count();
   }
 
