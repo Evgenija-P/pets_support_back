@@ -36,7 +36,7 @@ const getAllNoticesList = async (req, res, next) => {
         skip,
         limit,
       }
-    );
+    ).sort({ createdAt: -1 });
     totalHits = await Notices.find({
       $or: [
         { comments: { $regex: searchRegexp } },
@@ -47,8 +47,15 @@ const getAllNoticesList = async (req, res, next) => {
     noticesList = await Notices.find({}, '', {
       skip,
       limit,
-    });
+    }).sort({ createdAt: -1 });
     totalHits = await Notices.find({}).count();
+    // const noticesLists = await Notices.find({}, '', {
+    //   skip,
+    //   limit,
+    // }).sort({ createdAt: 1 });
+    totalHits = await Notices.find({}).count();
+    // console.log('-1', noticesList);
+    // console.log('1', noticesLists);
   }
 
   res.json({
