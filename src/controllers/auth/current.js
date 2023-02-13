@@ -5,7 +5,9 @@ const {
 const current = async (req, res) => {
   const { _id, email, name, city, phone, birthday, avatarURL } = req.user;
 
-  const currentUserPets = await Pet.find({ owner: _id });
+  const currentUserPets = await Pet.find({ owner: _id }).sort({
+    createdAt: 'desc',
+  });
   const currentUserData = {
     _id,
     email,
