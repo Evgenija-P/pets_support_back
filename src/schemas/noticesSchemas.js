@@ -4,12 +4,12 @@ const categoryNameList = ['sell', 'lost-found', 'for-free'];
 const sexList = ['male', 'female'];
 const { dateRegexp, cityRegexp, priceRegexp } = require('../helpers/regExps');
 const addNoticesSchema = Joi.object({
-  name: Joi.string().optional(),
+  name: Joi.string().min(2).max(16).allow(null, ''),
   title: Joi.string().required(),
-  breed: Joi.string().optional(),
+  breed: Joi.string().min(2).max(16).allow(null, ''),
   // location: Joi.array().items(Joi.string().required(), Joi.string().required()),
   location: Joi.string().pattern(cityRegexp).required(),
-  comments: Joi.string(),
+  comments: Joi.string().min(8).max(120).allow(null, ''),
   price: Joi.string().pattern(priceRegexp).optional(),
   // petImageURL: Joi.string().optional(),
   categoryName: Joi.string()
