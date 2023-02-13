@@ -38,7 +38,7 @@ const noticesShema = new mongoose.Schema(
     name: {
       type: String,
       required: false,
-      minlength: 2,
+      // minlength: 2,
       maxlength: 16,
       default: null,
     },
@@ -53,7 +53,7 @@ const noticesShema = new mongoose.Schema(
     comments: {
       type: String,
       required: false,
-      minlength: 8,
+      // minlength: 8,
       maxlength: 120,
       default: null,
     },
