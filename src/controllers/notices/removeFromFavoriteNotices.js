@@ -13,7 +13,7 @@ const removeFromFavoriteNotices = async (req, res, next) => {
   }
   const { favoriteList: prevFavoriteList } = isHaveFavorite;
   const newFavoriteList = prevFavoriteList.filter(
-    notices => notices !== idNotices
+    notices => notices._id.toString() !== idNotices
   );
   const favoriteUpdated = await Favorite.findOneAndUpdate(
     { owner },

@@ -31,15 +31,10 @@ const noticesShema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, 'Set title for notices'],
-      unique: true,
-      minlength: 2,
-      maxlength: 48,
     },
     name: {
       type: String,
       required: false,
-      minlength: 2,
-      maxlength: 16,
       default: null,
     },
     birthdate: {
@@ -53,8 +48,7 @@ const noticesShema = new mongoose.Schema(
     comments: {
       type: String,
       required: false,
-      minlength: 8,
-      maxlength: 120,
+
       default: null,
     },
     sex: { type: String, enum: sexList, required: true },
