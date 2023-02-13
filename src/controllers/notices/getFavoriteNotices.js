@@ -1,10 +1,10 @@
-const { Notices, Favorite } = require('../../models');
+const { Favorite } = require('../../models');
 // const { HttpError } = require('../../helpers');
 
 const PER_PAGE = 20;
 
 const getFavoriteNotices = async (req, res, next) => {
-  // console.log('getFavoriteNotices ');
+  console.log('getFavoriteNotices ');
   const {
     user: { _id: owner },
   } = req;
@@ -31,63 +31,83 @@ const getFavoriteNotices = async (req, res, next) => {
         favoriteList: [],
       });
     } else {
-      let favoriteNoticesList = [];
-      let totalHits = 0;
-      if (search) {
-        const searchRegexp = new RegExp(search);
-        // console.log('searchRegex', searchRegexp);
-        favoriteNoticesList = await Notices.find(
-          {
-            $and: [
-              { _id: { $in: [...favoriteList] } },
-              {
-                $or: [
-                  { comments: { $regex: searchRegexp } },
-                  { title: { $regex: searchRegexp } },
-                ],
-              },
-            ],
-          },
-          '',
-          {
-            skip,
-            limit,
-          }
-        );
-        //  totalHits = await Notices.find({
-        //    $or: [{ comments: { $regex: search } }, { title: { $regex: search } }],
-        //  }).count();
-        totalHits = await Notices.find({
-          $and: [
-            { _id: { $in: [...favoriteList] } },
-            {
-              $or: [
-                { comments: { $regex: searchRegexp } },
-                { title: { $regex: searchRegexp } },
-              ],
-            },
-          ],
-        }).count();
-      } else {
-        favoriteNoticesList = await Notices.find(
-          {
-            _id: { $in: [...favoriteList] },
-          },
-          '',
-          {
-            skip,
-            limit,
-          }
-        );
-        totalHits = await Notices.find({
-          _id: { $in: [...favoriteList] },
-        }).count();
-      }
-      res.json({
+      // let favoriteNoticesList = [];
+      // let totalHits = 0;
+      //     if (search) {
+      //       const searchRegexp = new RegExp(search);
+      //       // console.log('searchRegex', searchRegexp);
+      //       favoriteNoticesList = await Notices.find(
+      //         {
+      //           $and: [
+      //             { _id: { $in: [...favoriteList] } },
+      //             {
+      //               $or: [
+      //                 { comments: { $regex: searchRegexp } },
+      //                 { title: { $regex: searchRegexp } },
+      //               ],
+      //             },
+      //           ],
+      //         },
+      //         '',
+      //         {
+      //           skip,
+      //           limit,
+      //         }
+      //       );
+      //       //  totalHits = await Notices.find({
+      //       //    $or: [{ comments: { $regex: search } }, { title: { $regex: search } }],
+      //       //  }).count();
+      //       totalHits = await Notices.find({
+      //         $and: [
+      //           { _id: { $in: [...favoriteList] } },
+      //           {
+      //             $or: [
+      //               { comments: { $regex: searchRegexp } },
+      //               { title: { $regex: searchRegexp } },
+      //             ],
+      //           },
+      //         ],
+      //       }).count();
+      //     } else {
+      //       favoriteNoticesList = await Notices.find(
+      //         {
+      //           _id: { $in: [...favoriteList] },
+      //         },
+      //         '',
+      //         {
+      //           skip,
+      //           limit,
+      //         }
+      //       );
+      //       totalHits = await Notices.find({
+      //         _id: { $in: [...favoriteList] },
+      //       }).count();
+      //     }
+
+      const favoriteNoticesList = await Favorite.find(
+        {
+          owner,
+        },
+        '',
+        {
+          skip,
+          limit,
+        }
+      );
+      const { favoriteList } = isHaveFavorite;
+      console.log({
         message: favoriteNoticesList,
         favoriteList,
         page,
-        totalHits,
+        totalHits: favoriteList.length,
+        limit,
+        search,
+      });
+      res.json({
+        message: favoriteList,
+        favoriteList,
+        page,
+        totalHits: favoriteList.length,
         limit,
         search,
       });

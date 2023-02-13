@@ -31,9 +31,6 @@ const noticesShema = new mongoose.Schema(
     title: {
       type: String,
       required: [true, 'Set title for notices'],
-      unique: true,
-      minlength: 2,
-      maxlength: 48,
     },
     name: {
       type: String,
