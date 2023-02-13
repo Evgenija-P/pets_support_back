@@ -1,11 +1,13 @@
 const Joi = require('joi');
+
 const {
     emailRegex, 
-    passwordRegexp, 
-    userNameRegexp, 
+    passwordRegexp,
+    userNameRegexp,
     cityRegexp,
     phoneRegexp
 } = require('../helpers/regExps')
+
 
 const signUp = Joi.object({
     email: Joi.string().email().pattern(emailRegex).required(),

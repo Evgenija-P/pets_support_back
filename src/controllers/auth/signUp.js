@@ -1,11 +1,13 @@
 const bcrypt = require('bcryptjs');
-const {nanoid} = require('nanoid')
+// const { nanoid } = require('nanoid')
+const jwt = require('jsonwebtoken');
 
 const { User } = require('../../models');
 const { HttpError } = require('../../helpers')
-const {emails} = require('../../services')
+// const {emails} = require('../../services')
 
-const { BASE_URL } = process.env;
+// const { BASE_URL } = process.env;
+const { SECRET_KEY } = process.env;
 
 const signUp = async (req, res, next) => {
     const { email, password } = req.body;
@@ -17,19 +19,30 @@ const signUp = async (req, res, next) => {
 
     const hashPassword = await bcrypt.hash(password, 10);
 
-    const verificationToken = nanoid();
+    // const verificationToken = nanoid();
 
-    const newUser = await User.create({ ...req.body, password: hashPassword, verificationToken });
+    const newUser = await User.create({ ...req.body, password: hashPassword });
+
     
-    const verifyEmail = {
-        to: email,
-        subject: "Verify email",
-        html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`
-    }
+    const payload = {
+        id: newUser._id,
+    };
 
-    await emails.sendEmail(verifyEmail)
+    const token = jwt.sign(payload, SECRET_KEY, { expiresIn: '23h' });
+
+    await User.findByIdAndUpdate(newUser._id, { token });
+
+    
+    // const verifyEmail = {
+    //     to: email,
+    //     subject: "Verify email",
+    //     html: `<a target="_blank" href="${BASE_URL}/api/users/verify/${verificationToken}">Click verify email</a>`
+    // }
+
+    // await emails.sendEmail(verifyEmail)
 
     res.status(201).json({
+        token,
         status: "Success",
         code: 201,
         data: {
@@ -38,7 +51,7 @@ const signUp = async (req, res, next) => {
             birthday: newUser.birthday,
             phone: newUser.phone,
             city: newUser.city,
-            avatarURL : newUser.avatarURL,
+            avatarURL: newUser.avatarURL,
         }
     })
     

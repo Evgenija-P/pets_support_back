@@ -1,7 +1,6 @@
 const { Schema, model } = require('mongoose');
 const { handleMongooseError } = require('../helpers');
-
-const sexList = ['male', 'female'];
+const { dateRegexp } = require('../helpers/regExps');
 
 const petSchema = new Schema(
   {
@@ -13,6 +12,7 @@ const petSchema = new Schema(
     },
     birthday: {
       type: String,
+      match: [dateRegexp, "birthdate must be a 'DD.MM.YYYY' format."],
       required: [true, 'Birthday is required'],
     },
     breed: {
@@ -21,14 +21,13 @@ const petSchema = new Schema(
       maxlength: 16,
       required: [true, 'Breed is required'],
     },
-    sex: { type: String, enum: sexList, required: true },
     photoURL: {
       type: String,
       default: null,
     },
     comments: {
       type: String,
-      minlength: 8,
+      // minlength: 8,
       maxlength: 120,
       default: null,
     },

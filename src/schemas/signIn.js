@@ -1,5 +1,10 @@
 const Joi = require('joi');
-const {emailRegex, passwordRegexp} = require('../helpers/regExps')
+
+
+const {
+    emailRegex, 
+    passwordRegexp
+} = require('../helpers/regExps')
 
 const signIn = Joi.object({
   email: Joi.string().email().pattern(emailRegex).required(),

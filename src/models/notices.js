@@ -35,6 +35,8 @@ const noticesShema = new mongoose.Schema(
     name: {
       type: String,
       required: false,
+      // minlength: 2,
+      maxlength: 16,
       default: null,
     },
     birthdate: {
@@ -48,7 +50,8 @@ const noticesShema = new mongoose.Schema(
     comments: {
       type: String,
       required: false,
-
+      // minlength: 8,
+      maxlength: 120,
       default: null,
     },
     sex: { type: String, enum: sexList, required: true },

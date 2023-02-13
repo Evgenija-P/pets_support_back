@@ -19,7 +19,7 @@ const addNoticesSchema = Joi.object({
     .valid(...sexList)
     .required(),
   // birthdate: Joi.date().format('DD-MM-YYYY').raw().required(),
-  birthdate: Joi.string().pattern(dateRegexp).optional(),
+  birthdate: Joi.string().pattern(dateRegexp).allow(null, ''),
 });
 
 const schemas = {
