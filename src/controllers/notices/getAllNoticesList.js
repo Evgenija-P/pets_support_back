@@ -3,7 +3,7 @@ const { Notices } = require('../../models');
 const getAllNoticesList = async (req, res, next) => {
   const { search = '' } = req.query;
 
-  const { page = 1, limit } = req.query;
+  const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
   let noticesList = [];
   let totalHits = 0;
