@@ -10,23 +10,19 @@ cloudinary.config({
 });
 
 const uploadImage = async (imagePath, options) => {
-  try {
-    const result = await cloudinary.uploader.upload(imagePath, options);
-    return result;
-  } catch (err) {
-    console.log(err);
-    console.log(err.message);
+  const result = await cloudinary.uploader.upload(imagePath, options);
+  if (!result) {
+    throw new Error('Cloudingary error occured. Imgae uploading not completed');
   }
+  return result;
 };
 
 const removeImageFromCloud = async (imageId, options) => {
-  try {
-    const result = await cloudinary.uploader.destroy(imageId, options);
-    return result;
-  } catch (err) {
-    console.log(err);
-    console.log(err.message);
+  const result = await cloudinary.uploader.destroy(imageId, options);
+  if (!result) {
+    throw new Error('Cloudingary error occured. Image deleting  not completed');
   }
+  return result;
 };
 
 const parseIdFromImageURL = imageURL => {
