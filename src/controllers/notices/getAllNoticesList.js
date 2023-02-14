@@ -27,8 +27,8 @@ const getAllNoticesList = async (req, res, next) => {
     noticesList = await Notices.find(
       {
         $or: [
-          { comments: { $regex: searchRegexp } },
-          { title: { $regex: searchRegexp } },
+          { comments: { $regex: searchRegexp, $options: 'i' } },
+          { title: { $regex: searchRegexp, $options: 'i' } },
         ],
       },
       '',
@@ -39,8 +39,8 @@ const getAllNoticesList = async (req, res, next) => {
     ).sort({ createdAt: -1 });
     totalHits = await Notices.find({
       $or: [
-        { comments: { $regex: searchRegexp } },
-        { title: { $regex: searchRegexp } },
+        { comments: { $regex: searchRegexp, $options: 'i' } },
+        { title: { $regex: searchRegexp, $options: 'i' } },
       ],
     }).count();
   } else {
@@ -53,7 +53,7 @@ const getAllNoticesList = async (req, res, next) => {
     //   skip,
     //   limit,
     // }).sort({ createdAt: 1 });
-    totalHits = await Notices.find({}).count();
+    // totalHits = await Notices.find({}).count();
     // console.log('-1', noticesList);
     // console.log('1', noticesLists);
   }

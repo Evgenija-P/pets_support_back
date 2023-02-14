@@ -24,8 +24,8 @@ const getNoticesByCategory = async (req, res, next) => {
           { categoryName },
           {
             $or: [
-              { comments: { $regex: searchRegexp } },
-              { title: { $regex: searchRegexp } },
+              { comments: { $regex: searchRegexp, $options: 'i' } },
+              { title: { $regex: searchRegexp, $options: 'i' } },
             ],
           },
         ],
@@ -44,8 +44,8 @@ const getNoticesByCategory = async (req, res, next) => {
         { categoryName },
         {
           $or: [
-            { comments: { $regex: searchRegexp } },
-            { title: { $regex: searchRegexp } },
+            { comments: { $regex: searchRegexp, $options: 'i' } },
+            { title: { $regex: searchRegexp, $options: 'i' } },
           ],
         },
       ],
