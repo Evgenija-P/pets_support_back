@@ -1,7 +1,7 @@
 const { Notices, Favorite } = require('../../models');
 const { HttpError } = require('../../helpers');
+
 const addToFavoriteNotices = async (req, res, next) => {
-  // console.log('addToFavoriteNotices');
   const {
     user: { _id: owner },
   } = req;
@@ -18,11 +18,9 @@ const addToFavoriteNotices = async (req, res, next) => {
   }
   const { favoriteList: prevFavoriteList } = isHaveFavorite;
   const isExists = prevFavoriteList.find(favorite => {
-    // console.log('favorite._id', favorite._id);
-    // console.log('idNotices', idNotices);
     return favorite._id.toString() === idNotices;
   });
-  // console.log(isExists);
+
   if (isExists) {
     throw HttpError(404, `FavoritNotices with id:${idNotices} alredy exist!`);
   }
@@ -34,7 +32,7 @@ const addToFavoriteNotices = async (req, res, next) => {
     },
     { new: true }
   );
-  // console.log('notices', notices);
+
   res.status(201).json({
     message: notices,
   });
