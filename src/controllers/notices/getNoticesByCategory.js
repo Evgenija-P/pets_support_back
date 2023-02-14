@@ -1,13 +1,11 @@
 const { Notices } = require('../../models');
 const { HttpError } = require('../../helpers');
 
-const PER_PAGE = 20;
 const getNoticesByCategory = async (req, res, next) => {
   const { categoryName } = req.params;
   const { search = '' } = req.query;
-  // console.log('getNoticesByCategory');
-  // const { categoryName = 'sell' } = req.query;
-  const { page = 1, limit = PER_PAGE } = req.query;
+
+  const { page = 1, limit  } = req.query;
   const skip = (page - 1) * limit;
 
   if (!categoryName) {
@@ -17,7 +15,6 @@ const getNoticesByCategory = async (req, res, next) => {
   let totalHits = 0;
   if (search) {
     const searchRegexp = new RegExp(search);
-    // console.log('searchRegex', searchRegexp);
     noticesList = await Notices.find(
       {
         $and: [
@@ -36,9 +33,7 @@ const getNoticesByCategory = async (req, res, next) => {
         limit,
       }
     ).sort({ createdAt: -1 });
-    //  totalHits = await Notices.find({
-    //    $or: [{ comments: { $regex: search } }, { title: { $regex: search } }],
-    //  }).count();
+
     totalHits = await Notices.find({
       $and: [
         { categoryName },

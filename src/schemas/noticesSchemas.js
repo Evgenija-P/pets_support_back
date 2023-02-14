@@ -7,18 +7,15 @@ const addNoticesSchema = Joi.object({
   name: Joi.string().min(2).max(16).allow(null, ''),
   title: Joi.string().required(),
   breed: Joi.string().min(2).max(16).allow(null, ''),
-  // location: Joi.array().items(Joi.string().required(), Joi.string().required()),
   location: Joi.string().pattern(cityRegexp).required(),
   comments: Joi.string().min(8).max(120).allow(null, ''),
   price: Joi.string().pattern(priceRegexp).optional(),
-  // petImageURL: Joi.string().optional(),
   categoryName: Joi.string()
     .valid(...categoryNameList)
     .required(),
   sex: Joi.string()
     .valid(...sexList)
     .required(),
-  // birthdate: Joi.date().format('DD-MM-YYYY').raw().required(),
   birthdate: Joi.string().max(10).pattern(dateRegexp).allow(null, ''),
 });
 

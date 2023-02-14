@@ -2,7 +2,6 @@ const { Favorite } = require('../../models');
 const { HttpError } = require('../../helpers');
 
 const removeFromFavoriteNotices = async (req, res, next) => {
-  // console.log('removeFromFavoriteNotices');
   const {
     user: { _id: owner },
   } = req;
@@ -15,7 +14,7 @@ const removeFromFavoriteNotices = async (req, res, next) => {
   const newFavoriteList = prevFavoriteList.filter(
     notices => notices._id.toString() !== idNotices
   );
-  // const favoriteUpdated = await Favorite.findOneAndUpdate(
+
   await Favorite.findOneAndUpdate(
     { owner },
     {
