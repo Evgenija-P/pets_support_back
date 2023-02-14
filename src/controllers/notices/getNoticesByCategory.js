@@ -5,7 +5,7 @@ const getNoticesByCategory = async (req, res, next) => {
   const { categoryName } = req.params;
   const { search = '' } = req.query;
 
-  const { page = 1, limit  } = req.query;
+  const { page = 1, limit = 20 } = req.query;
   const skip = (page - 1) * limit;
 
   if (!categoryName) {

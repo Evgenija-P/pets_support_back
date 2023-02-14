@@ -6,7 +6,7 @@ const getNoticesByOwner = async (req, res, next) => {
   } = req;
   let noticesList = [];
   let totalHits = 0;
-  const { page = 1, limit, search = '' } = req.query;
+  const { page = 1, limit = 20, search = '' } = req.query;
   const skip = (page - 1) * limit;
   if (search) {
     const searchRegexp = new RegExp(search);
