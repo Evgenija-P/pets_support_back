@@ -9,10 +9,12 @@ const addPet = async (req, res) => {
 
   if (path) {
     const [filename] = req.file.filename.split('.');
-    const { url } = await cloud.uploadImage(path, {
+    const file = await cloud.uploadImage(path, {
       public_id: filename,
+      quality: 'auto:good',
     });
-    photoURL = url;
+
+    photoURL = file.url;
     fs.rm(path);
   }
 
