@@ -42,6 +42,7 @@ const noticesShema = new mongoose.Schema(
     birthdate: {
       type: String,
       require: false,
+      maxlength: 10,
       match: dateRegexp,
       default: null,
     },

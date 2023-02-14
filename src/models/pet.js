@@ -12,6 +12,7 @@ const petSchema = new Schema(
     },
     birthday: {
       type: String,
+      maxlength: 10,
       match: [dateRegexp, "birthdate must be a 'DD.MM.YYYY' format."],
       required: [true, 'Birthday is required'],
     },
