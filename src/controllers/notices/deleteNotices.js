@@ -7,7 +7,6 @@ const deleteNotices = async (req, res, next) => {
   const {
     user: { _id: owner },
   } = req;
-
   const noticesRemoved = await Notices.findOneAndRemove({
     owner,
     _id: idNotices,

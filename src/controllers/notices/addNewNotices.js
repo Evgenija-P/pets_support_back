@@ -9,7 +9,10 @@ const addNewNotices = async (req, res, next) => {
 
   if (req.file) {
     const { path: tempUpload } = req.file;
+
     petImageURL = await uploadImage(tempUpload);
+    const [firstPart, secondPart] = petImageURL.split('upload/');
+    petImageURL = firstPart + 'upload/q_auto/' + secondPart;
     try {
       await fs.unlink(tempUpload);
     } catch (err) {
