@@ -1,4 +1,5 @@
 const emailRegex =
+  // eslint-disable-next-line
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const phoneRegexp = /^\+380\d{2}\d{3}\d{2}\d{2}$/;
@@ -11,7 +12,9 @@ const cityRegexp =
 
 const priceRegexp = /^[1-9]+[0-9]*$/;
 
-const userNameRegexp = /^([a-zA-Z]{1}|([a-zA-Z]{1,}['-]?[a-zA-Z])+)+$/;
+const userNameRegexp =
+  /^([a-zA-Zа-яА-Я]{1}|([a-zA-Zа-яА-Я]{1,}['-]?[a-zA-Zа-яА-Я][\s]?)+)+$/;
+// /^([a-zA-Z]{1}|([a-zA-Z]{1,}['-]?[a-zA-Z])+)+$/;
 
 const passwordRegexp = /^\S*$/;
 
