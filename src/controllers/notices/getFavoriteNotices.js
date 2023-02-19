@@ -17,7 +17,13 @@ const getFavoriteNotices = async (req, res, next) => {
       limit,
     });
   } else {
-    const { favoriteList } = isHaveFavorite;
+    const { favoriteList: onsortedfavoriteList } = isHaveFavorite;
+    const favoriteList = [...onsortedfavoriteList].sort(function (a, b) {
+      const dateA = new Date(a.createdAt);
+      const dateB = new Date(b.createdAt);
+      return dateB - dateA;
+    });
+
     if (favoriteList.length === 0) {
       res.json({
         message: nocitesRes,
@@ -28,7 +34,6 @@ const getFavoriteNotices = async (req, res, next) => {
       });
     } else {
       if (search) {
-        const { favoriteList } = isHaveFavorite;
         const filterFavoritrNotices = (notices, search) => {
           const filteredNocites = notices.filter(
             notice =>
@@ -68,7 +73,6 @@ const getFavoriteNotices = async (req, res, next) => {
           });
         }
       } else {
-        const { favoriteList } = isHaveFavorite;
         let paginFavoriteList = [];
         if (favoriteList.length > limit && page > 1) {
           const end =
