@@ -4,8 +4,8 @@ const getFavoriteNotices = async (req, res, next) => {
   const {
     user: { _id: owner },
   } = req;
-  const { page = 1, search = '' } = req.query;
-
+  const { page = 1, search = '', limit } = req.query;
+  const skip = (page - 1) * limit;
   let nocitesRes = [];
   const isHaveFavorite = await Favorite.findOne({ owner });
   if (isHaveFavorite === null) {
@@ -14,6 +14,7 @@ const getFavoriteNotices = async (req, res, next) => {
       page: 0,
       totalHits: 0,
       favoriteList: nocitesRes,
+      limit,
     });
   } else {
     const { favoriteList } = isHaveFavorite;
@@ -23,6 +24,7 @@ const getFavoriteNotices = async (req, res, next) => {
         page: 0,
         totalHits: 0,
         favoriteList: nocitesRes,
+        limit,
       });
     } else {
       if (search) {
@@ -37,23 +39,64 @@ const getFavoriteNotices = async (req, res, next) => {
         };
         nocitesRes = filterFavoritrNotices(favoriteList, search);
 
-        res.json({
-          message: nocitesRes,
-          favoriteList,
-          page,
-          totalHits: nocitesRes.length,
-          search,
-        });
+        let paginFavoriteList = [];
+        if (nocitesRes.length > limit && page > 1) {
+          const end =
+            nocitesRes.length > page * limit
+              ? page * limit - 1
+              : page * limit - 1 - (page * limit - nocitesRes.length);
+
+          paginFavoriteList = nocitesRes.slice(skip - 1, end);
+
+          res.json({
+            message: paginFavoriteList,
+            favoriteList,
+            page,
+            totalHits: nocitesRes.length,
+            search,
+            limit,
+          });
+        } else {
+          paginFavoriteList = nocitesRes.slice(0, limit);
+          res.json({
+            message: paginFavoriteList,
+            favoriteList,
+            page,
+            totalHits: nocitesRes.length,
+            search,
+            limit,
+          });
+        }
       } else {
         const { favoriteList } = isHaveFavorite;
+        let paginFavoriteList = [];
+        if (favoriteList.length > limit && page > 1) {
+          const end =
+            favoriteList.length > page * limit
+              ? page * limit - 1
+              : page * limit - 1 - (page * limit - favoriteList.length);
+          console.log('end', end);
+          paginFavoriteList = favoriteList.slice(skip - 1, end);
 
-        res.json({
-          message: favoriteList,
-          favoriteList,
-          page,
-          totalHits: favoriteList.length,
-          search,
-        });
+          res.json({
+            message: paginFavoriteList,
+            favoriteList,
+            page,
+            totalHits: favoriteList.length,
+            search,
+            limit,
+          });
+        } else {
+          paginFavoriteList = favoriteList.slice(0, limit);
+          res.json({
+            message: paginFavoriteList,
+            favoriteList,
+            page,
+            totalHits: favoriteList.length,
+            search,
+            limit,
+          });
+        }
       }
     }
   }

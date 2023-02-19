@@ -11,10 +11,10 @@ const addNewNotices = async (req, res, next) => {
   let petImageURL = '';
   let resultUpload = '';
   const compressedDir = path.join(__dirname, '../../../', 'temp', 'compressed');
-  console.log('compressedDir', compressedDir);
+  // console.log('compressedDir', compressedDir);
   if (req.file) {
     const { path: tempUpload, filename } = req.file;
-    console.log('tempUpload', tempUpload);
+    // console.log('tempUpload', tempUpload);
     await Jimp.read(tempUpload)
       .then(avatar => {
         resultUpload = path.join(compressedDir, filename);
