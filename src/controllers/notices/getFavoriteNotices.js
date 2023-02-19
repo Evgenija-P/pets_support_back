@@ -44,7 +44,7 @@ const getFavoriteNotices = async (req, res, next) => {
           const end =
             nocitesRes.length > page * limit
               ? page * limit - 1
-              : page * limit - 1 - (page * limit - nocitesRes.length);
+              : page * limit - (page * limit - nocitesRes.length);
 
           paginFavoriteList = nocitesRes.slice(skip - 1, end);
 
@@ -74,7 +74,7 @@ const getFavoriteNotices = async (req, res, next) => {
           const end =
             favoriteList.length > page * limit
               ? page * limit - 1
-              : page * limit - 1 - (page * limit - favoriteList.length);
+              : page * limit - (page * limit - favoriteList.length);
           console.log('end', end);
           paginFavoriteList = favoriteList.slice(skip - 1, end);
 
