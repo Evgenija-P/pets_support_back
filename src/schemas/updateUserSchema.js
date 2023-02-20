@@ -12,7 +12,7 @@ const updateUserSchema = Joi.object({
     name: Joi.string().pattern(userNameRegexp).required(),
     city: Joi.string().pattern(cityRegexp).required(),
     phone: Joi.string().pattern(phoneRegexp).required(),
-    birthday: Joi.string().pattern(dateRegexp).required(),
+    birthday: Joi.string().pattern(dateRegexp),
 })
 
 module.exports = updateUserSchema;
