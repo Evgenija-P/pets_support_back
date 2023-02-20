@@ -11,7 +11,7 @@ cloudinary.config({
 
 const uploadImage = async imagePath => {
   const options = {
-    use_filename: true,
+    // use_filename: true,
     unique_filename: false,
     overwrite: true,
     secure: true,
