@@ -27,7 +27,7 @@ const getNoticesByOwner = async (req, res, next) => {
         skip,
         limit,
       }
-    );
+    ).sort({ createdAt: -1 });
     totalHits = await Notices.find({
       $and: [
         { owner },
@@ -43,7 +43,7 @@ const getNoticesByOwner = async (req, res, next) => {
     noticesList = await Notices.find({ owner }, '', {
       skip,
       limit,
-    });
+    }).sort({ createdAt: -1 });
 
     totalHits = await Notices.find({ owner }).count();
   }
