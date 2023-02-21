@@ -23,9 +23,10 @@ const removeFromFavoriteNotices = async (req, res, next) => {
     { new: true }
   );
   const { favoriteList: updatedFavoritList } = result;
-
-  if (!updatedFavoritList.some(notice => notice._id === idNotices)) {
-    res.status(201).json({ message: idNotices });
+  if (updatedFavoritList) {
+    if (!updatedFavoritList.some(notice => notice._id === idNotices)) {
+      res.status(201).json({ message: idNotices });
+    }
   } else {
     res.status(201).json({ message: result });
   }
