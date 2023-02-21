@@ -28,7 +28,8 @@ const removeFromFavoriteNotices = async (req, res, next) => {
       res.status(201).json({ message: idNotices });
     }
   } else {
-    res.status(201).json({ message: result });
+    throw HttpError(400, result);
+    // res.status(201).json({ message: result });
   }
 };
 module.exports = removeFromFavoriteNotices;
