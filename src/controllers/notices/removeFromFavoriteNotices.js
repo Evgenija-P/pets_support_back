@@ -15,7 +15,7 @@ const removeFromFavoriteNotices = async (req, res, next) => {
     notices => notices._id.toString() !== idNotices
   );
 
-  await Favorite.findOneAndUpdate(
+  const result = await Favorite.findOneAndUpdate(
     { owner },
     {
       $set: { favoriteList: [...newFavoriteList] },
@@ -23,7 +23,6 @@ const removeFromFavoriteNotices = async (req, res, next) => {
     { new: true }
   );
 
-  res.status(201).json({ message: idNotices });
+  res.status(201).json({ message: result });
 };
-
 module.exports = removeFromFavoriteNotices;

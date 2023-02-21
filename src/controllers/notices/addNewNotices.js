@@ -1,45 +1,56 @@
 const { Notices } = require('../../models');
 const { uploadImage } = require('../../helpers');
 const fs = require('fs/promises');
-// const Jimp = require('jimp');
-// const path = require('path');
-// const JIMP_QUALITY = 60;
 
+// const path = require('path');
+
+// const sharp = require('sharp');
 const addNewNotices = async (req, res, next) => {
   const { body, user } = req;
   const { _id: owner, email, phone } = user;
   let petImageURL = '';
-  // let resultUpload = '';
-  // const compressedDir = path.join(__dirname, '../../../', 'temp', 'compressed');
-  // console.log('compressedDir', compressedDir);
+  // let compressPath = '';
   if (req.file) {
-    const { path: tempUpload } = req.file;
     // const { path: tempUpload, filename } = req.file;
-    // console.log('tempUpload', tempUpload);
-    // await Jimp.read(tempUpload)
-    //   .then(avatar => {
-    //     resultUpload = path.join(compressedDir, filename);
-    //     console.log(' resultUpload', resultUpload);
-    //     return (
-    //       avatar
-    //         // .resize(RESIZE_WIDTH) // resize
-    //         .quality(JIMP_QUALITY) // set JPEG quality
-    //         .write(resultUpload)
-    //     ); // save
+    const { path: tempUpload } = req.file;
+    // const config = {
+    //   jpeg: { quality: 80 },
+    //   webp: { quality: 80 },
+    //   png: { compressionLevel: 8 },
+    // };
+
+    // const image = sharp(tempUpload);
+    // const meta = await image.metadata();
+    // const { format } = meta;
+
+    // await image[format](config[format])
+    //   .flatten()
+    //   .toFile(path.join(__dirname, '../../../', 'temp', 'compressed', filename))
+    //   .then(() => {
+    //     compressPath = path.join(
+    //       __dirname,
+    //       '../../../',
+    //       'temp',
+    //       'compressed',
+    //       filename
+    //     );
     //   })
-    //   .catch(err => {
-    //     console.error(err);
-    // //   });
-    // console.log('resultUpload', resultUpload);
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
+
+    // console.log('compress', compressPath);
     petImageURL = await uploadImage(tempUpload);
-    console.log('petImageURL', petImageURL);
-    const [firstPart, secondPart] = petImageURL.split('upload/');
-    petImageURL = firstPart + 'upload/q_auto/' + secondPart;
-    try {
-      await fs.unlink(tempUpload);
-      // await fs.unlink(resultUpload);
-    } catch (err) {
-      console.error(err);
+    // console.log('petImageURL', petImageURL);
+    if (petImageURL) {
+      const [firstPart, secondPart] = petImageURL.split('upload/');
+      petImageURL = firstPart + 'upload/q_auto/' + secondPart;
+      try {
+        await fs.unlink(tempUpload);
+        // await fs.unlink(compressPath);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 
